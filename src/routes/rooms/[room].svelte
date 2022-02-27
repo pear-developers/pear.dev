@@ -1,8 +1,10 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
+	import { onDestroy } from 'svelte';
 
-	let messages = [];
+	let roomName;
+	let participants;
 	let user;
 
 	if (browser) {
@@ -24,9 +26,29 @@
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
+			if (msg.message_type == 'RoomConnection') {
+				roomName = msg.content.url.replace('/', '');
+				participants = msg.content.participants;
+			} else if (msg.message_type == 'ParticipantAdded') {
+				let uuid = msg.content.uuid;
+				participants[uuid] = msg.content;
+			} else if (msg.message_type == 'ParticipantRemoved') {
+				let uuid = msg.content.uuid;
+				if (uuid in participants) {
+					delete participants[uuid];
+				}
+			}
 			console.log(msg);
-			messages = [...[msg]];
 		});
+
+		onDestroy((ws) =>
+			ws.send(
+				JSON.stringify({
+					message_type: 'RoomDisconnection',
+					content: user.uuid
+				})
+			)
+		);
 	}
 </script>
 
@@ -48,17 +70,17 @@
 </nav>
 
 <div class="content">
-	{#if messages.length > 0}
-		<h1>{messages[0].url.replace('/', '')}</h1>
+	{#if roomName}
+		<h1>{roomName}</h1>
+	{/if}
+	{#if participants}
 		<ul>
-			{#each Object.entries(messages[messages.length - 1].participants) as [uuid, participant]}
+			{#each Object.entries(participants) as [uuid, participant]}
 				<li>
 					<p>{participant.name}</p>
 				</li>
 			{/each}
 		</ul>
-	{:else}
-		<p>Nothing to show</p>
 	{/if}
 </div>
 

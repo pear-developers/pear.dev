@@ -1,4 +1,5 @@
 import { Participant } from './participant.ts';
+import { ParticipantUpdateMessage, ParticipantUpdateType } from './message.ts';
 
 export class Room {
 	url: string;
@@ -10,6 +11,18 @@ export class Room {
 	}
 
 	addParticipant(participant: Participant) {
-		if (!(participant.uuid in this.participants)) this.participants[participant.uuid] = participant;
+		if (!(participant.uuid in this.participants)) {
+			this.participants[participant.uuid] = participant;
+
+			for (const key in this.participants) {
+				if (key != participant.uuid) {
+					this.participants[key].ws.send(
+						JSON.stringify(
+							new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantAdded, participant)
+						)
+					);
+				}
+			}
+		}
 	}
 }

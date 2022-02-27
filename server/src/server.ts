@@ -1,4 +1,5 @@
 import { WebSocketClient, WebSocketServer } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
+import { RoomConnectionMessage } from './message.ts';
 import { Participant } from './participant.ts';
 import { Room } from './room.ts';
 
@@ -22,13 +23,14 @@ export class Server {
 		if (client_uuid && name) {
 			const participant = new Participant(client_uuid, name, ws);
 
-			if (roomUrl in this.rooms) {
-				this.rooms[roomUrl].addParticipant(participant);
-				ws.send(JSON.stringify(this.rooms[roomUrl]));
-			} else {
-				this.rooms[roomUrl] = new Room(roomUrl, participant);
-				ws.send(JSON.stringify(this.rooms[roomUrl]));
-			}
+			if (roomUrl in this.rooms) this.rooms[roomUrl].addParticipant(participant);
+			else this.rooms[roomUrl] = new Room(roomUrl, participant);
+
+			ws.send(JSON.stringify(new RoomConnectionMessage(this.rooms[roomUrl])));
 		}
+
+		ws.on('message', (msg) => {
+			console.log(msg);
+		});
 	}
 }
