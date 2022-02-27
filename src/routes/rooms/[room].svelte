@@ -35,20 +35,13 @@
 			} else if (msg.message_type == 'ParticipantRemoved') {
 				let uuid = msg.content.uuid;
 				if (uuid in participants) {
-					delete participants[uuid];
+					let newParticipants = participants;
+					delete newParticipants[uuid];
+					participants = newParticipants;
 				}
 			}
 			console.log(msg);
 		});
-
-		onDestroy((ws) =>
-			ws.send(
-				JSON.stringify({
-					message_type: 'RoomDisconnection',
-					content: user.uuid
-				})
-			)
-		);
 	}
 </script>
 

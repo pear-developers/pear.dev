@@ -25,4 +25,18 @@ export class Room {
 			}
 		}
 	}
+
+	removeParticipant(uuid: string) {
+		if (uuid in this.participants) {
+			let participant = this.participants[uuid];
+			delete this.participants[uuid];
+			for (const key in this.participants) {
+				this.participants[key].ws.send(
+					JSON.stringify(
+						new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantRemoved, participant)
+					)
+				);
+			}
+		}
+	}
 }

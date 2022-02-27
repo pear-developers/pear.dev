@@ -29,8 +29,8 @@ export class Server {
 			ws.send(JSON.stringify(new RoomConnectionMessage(this.rooms[roomUrl])));
 		}
 
-		ws.on('message', (msg) => {
-			console.log(msg);
+		ws.on('close', () => {
+			if (roomUrl in this.rooms && client_uuid) this.rooms[roomUrl].removeParticipant(client_uuid);
 		});
 	}
 }
