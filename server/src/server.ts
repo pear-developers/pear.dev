@@ -19,9 +19,10 @@ export class Server {
 		const params = new URLSearchParams(request.split('?')[1]);
 		const client_uuid = params.get('client_id');
 		const name = params.get('name');
+		const picture = params.get('picture');
 
-		if (client_uuid && name) {
-			const participant = new Participant(client_uuid, name, ws);
+		if (client_uuid && name && picture) {
+			const participant = new Participant(client_uuid, name, picture, ws);
 
 			if (roomUrl in this.rooms) this.rooms[roomUrl].addParticipant(participant);
 			else this.rooms[roomUrl] = new Room(roomUrl, participant);
