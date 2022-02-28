@@ -3,7 +3,7 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 
-	let roomName, participants, user, ws, pictureInput;
+	let roomName, participants, user, ws, pictureInput, timeRemaining;
 
 	if (browser) {
 		user = window.localStorage.getItem('user');
@@ -27,10 +27,12 @@
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
+			console.log(msg);
 			switch (msg.message_type) {
 				case 'RoomConnection':
 					roomName = msg.content.url.replace('/', '');
 					participants = msg.content.participants;
+					timeRemaining = msg.content.timer.remaining;
 					break;
 				case 'ParticipantAdded':
 					const add_uuid = msg.content.uuid;
@@ -93,6 +95,20 @@
 			}
 		};
 	};
+
+	const toIntegerWithPrependZero = (n) => {
+		return n.toLocaleString('en-US', {
+			minimumIntegerDigits: 2,
+			useGrouping: false
+		});
+	};
+
+	const formatTime = (time) => {
+		const t = time / 1000;
+		const s = Math.floor((t % 60) / 1);
+		const m = Math.floor(t / 60);
+		return `${toIntegerWithPrependZero(m)}:${toIntegerWithPrependZero(s)}`;
+	};
 </script>
 
 <nav class="navbar">
@@ -117,25 +133,32 @@
 </nav>
 
 <div class="content">
-	{#if roomName}
-		<h1>{roomName}</h1>
-	{/if}
-	{#if participants}
-		<ul>
-			{#each Object.entries(participants) as [uuid, participant]}
-				<li
-					class="participant-container"
-					in:fly={{ x: 1000, duration: 500 }}
-					out:fly={{ x: -1000, duration: 500 }}
-				>
-					<div class="user-picture-container">
-						<img class="user-picture" src={participant.picture} alt="Participant profile" />
-					</div>
-					<p class="participant-name">{participant.name}</p>
-				</li>
-			{/each}
-		</ul>
-	{/if}
+	<div class="room-header-container">
+		{#if roomName}
+			<h1>{roomName}</h1>
+		{/if}
+	</div>
+	<div class="timer-container">
+		<h2>{formatTime(timeRemaining)}</h2>
+	</div>
+	<div class="participants-container">
+		{#if participants}
+			<ul>
+				{#each Object.entries(participants) as [uuid, participant]}
+					<li
+						class="participant-container"
+						in:fly={{ x: 1000, duration: 500 }}
+						out:fly={{ x: -1000, duration: 500 }}
+					>
+						<div class="user-picture-container">
+							<img class="user-picture" src={participant.picture} alt="Participant profile" />
+						</div>
+						<p class="participant-name">{participant.name}</p>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</div>
 </div>
 
 <input
@@ -203,6 +226,10 @@
 
 	.content ul {
 		list-style-type: none;
+	}
+
+	.timer-container {
+		padding: 0 1em;
 	}
 
 	.participant-container {
