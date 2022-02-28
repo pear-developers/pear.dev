@@ -1,14 +1,17 @@
 import { Participant } from './participant.ts';
 import { ParticipantUpdateMessage, ParticipantUpdateType } from './message.ts';
 import { WebSocketClient } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
+import { Timer } from './timer.ts';
 
 export class Room {
 	url: string;
 	participants: { [uuid: string]: Participant } = {};
+	timer: Timer;
 
 	constructor(url: string, creator: Participant) {
 		this.url = url;
 		this.addParticipant(creator);
+		this.timer = new Timer(65_999);
 	}
 
 	addParticipant(participant: Participant) {
