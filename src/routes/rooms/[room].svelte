@@ -3,10 +3,7 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 
-	let roomName;
-	let participants;
-	let user;
-	let ws;
+	let roomName, participants, user, ws, pictureInput;
 
 	if (browser) {
 		user = window.localStorage.getItem('user');
@@ -23,12 +20,13 @@
 		}
 
 		ws = new WebSocket(
-			`ws://localhost:5000/${$page.params.room}?client_id=${user.uuid}&name=${user.name}&picture=${user.picture}`
+			`ws://localhost:5000/${$page.params.room}?client_id=${user.uuid}&name=${
+				user.name
+			}&picture=${encodeURIComponent(user.picture)}`
 		);
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
-
 			switch (msg.message_type) {
 				case 'RoomConnection':
 					roomName = msg.content.url.replace('/', '');
@@ -60,7 +58,7 @@
 		});
 	}
 
-	function handleNameInput() {
+	const handleNameInput = () => {
 		window.localStorage.setItem('user', JSON.stringify(user));
 		let updatedParticipants = participants;
 		updatedParticipants[user.uuid] = user;
@@ -73,7 +71,28 @@
 				})
 			);
 		}
-	}
+	};
+
+	const onPictureSelected = (e) => {
+		let image = e.target.files[0];
+		let reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = (e) => {
+			user.picture = e.target.result;
+			window.localStorage.setItem('user', JSON.stringify(user));
+			let updatedParticipants = participants;
+			updatedParticipants[user.uuid] = user;
+			participants = updatedParticipants;
+			if (ws) {
+				ws.send(
+					JSON.stringify({
+						message_type: 'ParticipantInfoUpdate',
+						content: user
+					})
+				);
+			}
+		};
+	};
 </script>
 
 <svelte:head>
@@ -90,7 +109,14 @@
 		{#if user}
 			<input on:change={handleNameInput} class="name-input" bind:value={user.name} />
 			<div class="user-picture-container">
-				<img class="user-picture" src={user.picture} alt="User profile" />
+				<img
+					on:click={() => {
+						pictureInput.click();
+					}}
+					class="user-picture clickable"
+					src={user.picture}
+					alt="User profile"
+				/>
 			</div>
 		{/if}
 	</div>
@@ -102,14 +128,14 @@
 	{/if}
 	{#if participants}
 		<ul>
-			{#each Object.entries(participants) as [_, participant]}
+			{#each Object.entries(participants) as [uuid, participant]}
 				<li
 					class="participant-container"
 					in:fly={{ x: 1000, duration: 500 }}
 					out:fly={{ x: -1000, duration: 500 }}
 				>
 					<div class="user-picture-container">
-						<img class="user-picture" src={user.picture} alt="Participant profile" />
+						<img class="user-picture" src={participant.picture} alt="Participant profile" />
 					</div>
 					<p class="participant-name">{participant.name}</p>
 				</li>
@@ -117,6 +143,14 @@
 		</ul>
 	{/if}
 </div>
+
+<input
+	style="display:none"
+	type="file"
+	accept=".jpg, .jpeg, .png"
+	on:change={(e) => onPictureSelected(e)}
+	bind:this={pictureInput}
+/>
 
 <style>
 	.navbar {
@@ -160,6 +194,10 @@
 		height: 32px;
 		border: 2px solid black;
 		border-radius: 50%;
+	}
+
+	.clickable {
+		cursor: pointer;
 	}
 
 	.content {

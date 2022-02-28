@@ -13,14 +13,16 @@ export class Participant {
 		this.ws = ws;
 	}
 
-	updateInfo(name: string) {
+	updateInfo(name: string, picture: string) {
 		this.name = name;
+		this.picture = picture;
 	}
 
 	toJSON() {
 		return {
 			uuid: this.uuid,
-			name: this.name
+			name: this.name,
+			picture: this.picture
 		};
 	}
 }

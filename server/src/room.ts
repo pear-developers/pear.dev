@@ -63,7 +63,7 @@ export class Room {
 							);
 						}
 					}
-					this.participants[data.content.uuid].updateInfo(data.content.name);
+					this.participants[data.content.uuid].updateInfo(data.content.name, data.content.picture);
 					break;
 				default:
 					return;
