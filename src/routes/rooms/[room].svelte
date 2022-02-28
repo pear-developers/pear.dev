@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
 	import { onDestroy } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	let roomName;
 	let participants;
@@ -69,7 +70,7 @@
 	{#if participants}
 		<ul>
 			{#each Object.entries(participants) as [uuid, participant]}
-				<li>
+				<li in:fly={{ x: 1000, duration: 500 }} out:fly={{ x: -1000, duration: 500 }}>
 					<p>{participant.name}</p>
 				</li>
 			{/each}
