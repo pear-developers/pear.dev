@@ -30,7 +30,10 @@ export class Server {
 		}
 
 		ws.on('close', () => {
-			if (roomUrl in this.rooms && client_uuid) this.rooms[roomUrl].removeParticipant(client_uuid);
+			if (roomUrl in this.rooms && client_uuid) {
+				const shouldRemove = this.rooms[roomUrl].removeParticipant(client_uuid);
+				if (shouldRemove) delete this.rooms[roomUrl];
+			}
 		});
 	}
 }

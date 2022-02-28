@@ -26,9 +26,9 @@ export class Room {
 		}
 	}
 
-	removeParticipant(uuid: string) {
+	removeParticipant(uuid: string): boolean {
 		if (uuid in this.participants) {
-			let participant = this.participants[uuid];
+			const participant = this.participants[uuid];
 			delete this.participants[uuid];
 			for (const key in this.participants) {
 				this.participants[key].ws.send(
@@ -38,5 +38,6 @@ export class Room {
 				);
 			}
 		}
+		return Object.keys(this.participants).length === 0;
 	}
 }
