@@ -1,5 +1,6 @@
 import { Participant } from './participant.ts';
 import { ParticipantUpdateMessage, ParticipantUpdateType } from './message.ts';
+import { WebSocketClient } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
 
 export class Room {
 	url: string;
@@ -7,7 +8,7 @@ export class Room {
 
 	constructor(url: string, creator: Participant) {
 		this.url = url;
-		this.participants[creator.uuid] = creator;
+		this.addParticipant(creator);
 	}
 
 	addParticipant(participant: Participant) {
@@ -23,6 +24,8 @@ export class Room {
 					);
 				}
 			}
+
+			this.bindParticipantWS(participant.ws);
 		}
 	}
 
@@ -31,13 +34,40 @@ export class Room {
 			const participant = this.participants[uuid];
 			delete this.participants[uuid];
 			for (const key in this.participants) {
-				this.participants[key].ws.send(
-					JSON.stringify(
-						new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantRemoved, participant)
-					)
-				);
+				if (key != uuid) {
+					this.participants[key].ws.send(
+						JSON.stringify(
+							new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantRemoved, participant)
+						)
+					);
+				}
 			}
 		}
 		return Object.keys(this.participants).length === 0;
+	}
+
+	bindParticipantWS(ws: WebSocketClient) {
+		ws.on('message', (msg) => {
+			const data = JSON.parse(msg);
+			switch (data.message_type) {
+				case ParticipantUpdateType.ParticipantInfoUpdate:
+					for (const key in this.participants) {
+						if (key != data.content.uuid) {
+							this.participants[key].ws.send(
+								JSON.stringify(
+									new ParticipantUpdateMessage(
+										ParticipantUpdateType.ParticipantInfoUpdate,
+										data.content
+									)
+								)
+							);
+						}
+					}
+					this.participants[data.content.uuid].updateInfo(data.content.name);
+					break;
+				default:
+					return;
+			}
+		});
 	}
 }

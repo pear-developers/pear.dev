@@ -18,7 +18,8 @@ export class RoomConnectionMessage implements WSMessage {
 
 export enum ParticipantUpdateType {
 	ParticipantAdded = 'ParticipantAdded',
-	ParticipantRemoved = 'ParticipantRemoved'
+	ParticipantRemoved = 'ParticipantRemoved',
+	ParticipantInfoUpdate = 'ParticipantInfoUpdate'
 }
 
 export class ParticipantUpdateMessage implements WSMessage {

@@ -11,6 +11,10 @@ export class Participant {
 		this.ws = ws;
 	}
 
+	updateInfo(name: string) {
+		this.name = name;
+	}
+
 	toJSON() {
 		return {
 			uuid: this.uuid,

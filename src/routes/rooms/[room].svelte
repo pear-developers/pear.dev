@@ -1,12 +1,12 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
-	import { onDestroy } from 'svelte';
 	import { fly } from 'svelte/transition';
 
 	let roomName;
 	let participants;
 	let user;
+	let ws;
 
 	if (browser) {
 		user = window.localStorage.getItem('user');
@@ -21,28 +21,57 @@
 			user = JSON.parse(user);
 		}
 
-		const ws = new WebSocket(
+		ws = new WebSocket(
 			`ws://localhost:5000/${$page.params.room}?client_id=${user.uuid}&name=${user.name}`
 		);
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
-			if (msg.message_type == 'RoomConnection') {
-				roomName = msg.content.url.replace('/', '');
-				participants = msg.content.participants;
-			} else if (msg.message_type == 'ParticipantAdded') {
-				let uuid = msg.content.uuid;
-				participants[uuid] = msg.content;
-			} else if (msg.message_type == 'ParticipantRemoved') {
-				let uuid = msg.content.uuid;
-				if (uuid in participants) {
-					let newParticipants = participants;
-					delete newParticipants[uuid];
-					participants = newParticipants;
-				}
+
+			switch (msg.message_type) {
+				case 'RoomConnection':
+					roomName = msg.content.url.replace('/', '');
+					participants = msg.content.participants;
+					break;
+				case 'ParticipantAdded':
+					const add_uuid = msg.content.uuid;
+					participants[add_uuid] = msg.content;
+					break;
+				case 'ParticipantRemoved':
+					const rmv_uuid = msg.content.uuid;
+					if (rmv_uuid in participants) {
+						let newParticipants = participants;
+						delete newParticipants[rmv_uuid];
+						participants = newParticipants;
+					}
+					break;
+				case 'ParticipantInfoUpdate':
+					const upd_uuid = msg.content.uuid;
+					if (upd_uuid in participants) {
+						let updatedParticipants = participants;
+						updatedParticipants[upd_uuid] = msg.content;
+						participants = updatedParticipants;
+					}
+					break;
+				default:
+					console.log(msg);
 			}
-			console.log(msg);
 		});
+	}
+
+	function handleNameInput() {
+		window.localStorage.setItem('user', JSON.stringify(user));
+		let updatedParticipants = participants;
+		updatedParticipants[user.uuid] = user;
+		participants = updatedParticipants;
+		if (ws) {
+			ws.send(
+				JSON.stringify({
+					message_type: 'ParticipantInfoUpdate',
+					content: user
+				})
+			);
+		}
 	}
 </script>
 
@@ -56,9 +85,9 @@
 	<div class="left">
 		<h3>MobTimer</h3>
 	</div>
-	<div class="right">
+	<div class="right flex">
 		{#if user}
-			<h3>{user.name}</h3>
+			<input on:change={handleNameInput} class="name-input" bind:value={user.name} />
 		{/if}
 	</div>
 </nav>
@@ -69,7 +98,7 @@
 	{/if}
 	{#if participants}
 		<ul>
-			{#each Object.entries(participants) as [uuid, participant]}
+			{#each Object.entries(participants) as [_, participant]}
 				<li in:fly={{ x: 1000, duration: 500 }} out:fly={{ x: -1000, duration: 500 }}>
 					<p>{participant.name}</p>
 				</li>
@@ -89,6 +118,23 @@
 
 	.left {
 		margin-right: auto;
+	}
+
+	.flex {
+		display: flex;
+	}
+
+	.name-input {
+		font-family: 'Poppins', sans-serif;
+		font-size: 1.17em;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+		background: none;
+		text-align: end;
 	}
 
 	.content {
