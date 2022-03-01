@@ -1,5 +1,5 @@
 import { Participant } from './participant.ts';
-import { ParticipantUpdateMessage, ParticipantUpdateType } from './message.ts';
+import { ParticipantUpdateMessage, ParticipantUpdateType, TimerUpdateType } from './message.ts';
 import { WebSocketClient } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
 import { Timer } from './timer.ts';
 
@@ -67,6 +67,9 @@ export class Room {
 						}
 					}
 					this.participants[data.content.uuid].updateInfo(data.content.name, data.content.picture);
+					break;
+				case TimerUpdateType.TimerStart:
+					console.log(data);
 					break;
 				default:
 					return;

@@ -8,7 +8,7 @@ interface WSMessage {
 
 export class RoomConnectionMessage implements WSMessage {
 	message_type: string;
-	content: object;
+	content: Room;
 
 	constructor(room: Room) {
 		this.message_type = 'RoomConnection';
@@ -24,10 +24,25 @@ export enum ParticipantUpdateType {
 
 export class ParticipantUpdateMessage implements WSMessage {
 	message_type: string;
-	content: object;
+	content: Participant;
 
 	constructor(type: ParticipantUpdateType, participant: Participant) {
 		this.message_type = type;
 		this.content = participant;
+	}
+}
+
+export enum TimerUpdateType {
+	TimerStart = 'TimerStart'
+}
+
+export class TimerStartMessage implements WSMessage {
+	message_type: string;
+	content: object;
+
+	constructor(timestamp: number) {
+		this.message_type = TimerUpdateType.TimerStart;
+		this.content = {};
+		// this.content = timestamp;
 	}
 }

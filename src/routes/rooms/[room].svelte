@@ -27,7 +27,6 @@
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
-			console.log(msg);
 			switch (msg.message_type) {
 				case 'RoomConnection':
 					roomName = msg.content.url.replace('/', '');
@@ -109,6 +108,19 @@
 		const m = Math.floor(t / 60);
 		return `${toIntegerWithPrependZero(m)}:${toIntegerWithPrependZero(s)}`;
 	};
+
+	const handleStartTimer = () => {
+		if (ws) {
+			ws.send(
+				JSON.stringify({
+					message_type: 'TimerStart',
+					content: {
+						timestamp: new Date().getTime()
+					}
+				})
+			);
+		}
+	};
 </script>
 
 <svelte:head>
@@ -146,6 +158,7 @@
 	</div>
 	<div class="timer-container">
 		<h2>{formatTime(timeRemaining)}</h2>
+		<button on:click={handleStartTimer}>Start</button>
 	</div>
 	<div class="participants-container">
 		{#if participants}
@@ -236,6 +249,7 @@
 
 	.timer-container {
 		padding: 0 1em;
+		display: flex;
 	}
 
 	.participant-container {
