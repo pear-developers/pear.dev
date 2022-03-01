@@ -5,19 +5,24 @@
 </p>
 
 # 🍐 pear.dev
+
 A mob/pair programming tool.
 
 # Developing
+
 ## Prerequisits
+
 - [Deno](https://deno.land/)
 - [npm](https://www.npmjs.com/)
 
 ## Installing
+
 ```zsh
 npm install
 ```
 
 ## Runing frontend
+
 ```zsh
 npm run dev
 
@@ -26,11 +31,13 @@ npm run dev -- --open
 ```
 
 ## Runing backend
+
 ```zsh
 npm run server
 ```
 
 ## Building
+
 ```zsh
 npm run build
 ```

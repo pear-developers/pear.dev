@@ -3,28 +3,26 @@
 	let createRoom;
 </script>
 
+<svelte:head>
+	<title>Pear.dev • Pair programming tool.</title>
+</svelte:head>
+
 <main>
 	<header>
 		<figure>
-			<img src="/type-logo.svg" alt="Pear logo with the text pair.dev" />
+			<img src="/pear-clock.gif" alt="Ticking clock shaped like a pear." />
 		</figure>
-		<h1>
-			<span>Start</span>
-			<span class="words">
-				<span>pair</span>
-				<span>mob</span>
-			</span>
-			<span>programming!</span>
-		</h1>
+		<h1>PEAR.DEV</h1>
+		<p>Timing is everything!</p>
 		<div class="input-group">
 			<input
 				type="text"
-				placeholder="room"
+				placeholder="Enter room name"
 				bind:value={room}
 				on:change={() => {
 					createRoom.click();
 				}}
-			/><a bind:this={createRoom} href="/rooms/{room}">create</a>
+			/><a bind:this={createRoom} href="/rooms/{room}">GO</a>
 		</div>
 	</header>
 </main>
@@ -38,23 +36,49 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-top: 4rem;
+		margin-top: 10rem;
 		width: 100vw;
+	}
+	h1 {
+		overflow: hidden;
+		margin: 0;
+		width: auto;
+
+		color: #3f3838;
+
+		font-family: 'Josefin Sans', sans-serif;
+		font-size: 64px;
+		font-weight: 600;
+	}
+	p {
+		margin-top: 0;
+
+		color: #898989;
+
+		font-family: 'Poppins', sans-serif;
+		font-size: 32px;
+		font-weight: 600;
 	}
 
 	img {
-		width: 20vw;
+		width: 8vw;
 	}
 
+	a,
 	input {
+		padding: 0.7rem 1rem;
+		border-radius: 10px;
+	}
+	input {
+		border-radius: 10px;
+		border: 1px solid #83cc69;
+		width: 20vw;
+
+		background-color: #ecfde6;
+
 		font-family: 'Poppins', sans-serif;
 		font-weight: 500;
 		font-size: 24px;
-		background-color: #ecfde6;
-		padding: 1rem;
-		border-radius: 10px;
-		border: 1px solid #83cc69;
-		width: 15vw;
 	}
 	input:focus {
 		outline: none;
@@ -65,15 +89,16 @@
 
 	a {
 		display: inline-block;
-		font-family: 'Poppins', sans-serif;
-		font-weight: 500;
-		font-size: 24px;
-		text-decoration: none;
-		background-color: #83cc69;
-		color: #597c4c;
-		padding: 1rem;
 		border-radius: 10px;
 		border: 1px solid #83cc69;
+
+		background-color: #83cc69;
+		color: #57a83b;
+
+		font-family: 'Poppins', sans-serif;
+		font-weight: 600;
+		font-size: 24px;
+		text-decoration: none;
 		cursor: pointer;
 	}
 
@@ -90,40 +115,5 @@
 	.input-group :nth-child(2) {
 		border-top-left-radius: 0 !important;
 		border-bottom-left-radius: 0 !important;
-	}
-
-	h1 {
-		font-family: 'Poppins', sans-serif;
-		font-weight: 500;
-		color: #3f3838;
-		height: 48px;
-		width: auto;
-		overflow: hidden;
-	}
-
-	.words {
-		display: inline-flex;
-		flex-direction: column;
-		animation: flip-words 6s infinite;
-		text-align: center;
-		font-weight: 700;
-	}
-
-	@keyframes flip-words {
-		0% {
-			transform: translateY(0%);
-		}
-		25% {
-			transform: translateY(-50%);
-		}
-		50% {
-			transform: translateY(-50%);
-		}
-		75% {
-			transform: translateY(0%);
-		}
-		100% {
-			transform: translateY(0%);
-		}
 	}
 </style>
