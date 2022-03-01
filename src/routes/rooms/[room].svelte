@@ -12,8 +12,13 @@
 	};
 	let localRemaining = 0;
 	let localInterval = null;
+	let notficiationEnabled = 'default';
 
 	if (browser) {
+		Notification.requestPermission().then((permission) => {
+			notficiationEnabled = permission;
+		});
+
 		user = window.localStorage.getItem('user');
 		if (user == undefined) {
 			user = {
@@ -148,6 +153,7 @@
 					timerStatus.remaining = 0;
 					handleTriggerTimer();
 					playJingle();
+					showNotification();
 					if (localInterval) clearInterval(localInterval);
 				}
 			}, 200);
@@ -159,6 +165,21 @@
 	const playJingle = () => {
 		const jingle = document.getElementById('jingle-audio');
 		jingle.play();
+	};
+
+	const showNotification = () => {
+		if (notficiationEnabled == 'granted') {
+			const notification = new Notification("Time's up!", {
+				body: 'Next dev! Click this notification to restart timer',
+				image: '/type-logo.png',
+				icon: '/type-logo.png'
+			});
+			notification.addEventListener('click', function () {
+				handleTriggerTimer();
+				notification.close();
+			});
+			setTimeout(() => notification.close(), 5_000);
+		}
 	};
 </script>
 
