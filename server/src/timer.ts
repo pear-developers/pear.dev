@@ -24,6 +24,7 @@ export class Timer {
 	stop(timestamp: number) {
 		const delta = timestamp - this.lastStartTime;
 		this.remaining -= delta;
+		if (this.remaining <= 0) this.remaining = this.duration;
 		this.state = TimerState.Stopped;
 	}
 

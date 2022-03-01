@@ -143,10 +143,22 @@
 			localInterval = setInterval(() => {
 				let delta = new Date().getTime() - newTimerStatus.lastStartTime;
 				timerStatus.remaining = localRemaining - delta;
+				if (timerStatus.remaining <= 0) {
+					timerStatus.state = 'Running';
+					timerStatus.remaining = 0;
+					handleTriggerTimer();
+					playJingle();
+					if (localInterval) clearInterval(localInterval);
+				}
 			}, 200);
 		} else if (currentStatus == 'Running' && newStatus == 'Stopped') {
 			if (localInterval) clearInterval(localInterval);
 		}
+	};
+
+	const playJingle = () => {
+		const jingle = document.getElementById('jingle-audio');
+		jingle.play();
 	};
 </script>
 
@@ -210,6 +222,9 @@
 	on:change={(e) => onPictureSelected(e)}
 	bind:this={pictureInput}
 />
+<audio id="jingle-audio">
+	<source src="/jingle.mp3" type="audio/mpeg" />
+</audio>
 
 <style>
 	.navbar {

@@ -16,7 +16,7 @@ export class Room {
 	constructor(url: string, creator: Participant) {
 		this.url = url;
 		this.addParticipant(creator);
-		this.timer = new Timer(65_999);
+		this.timer = new Timer(5_999);
 	}
 
 	addParticipant(participant: Participant) {
