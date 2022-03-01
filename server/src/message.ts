@@ -1,5 +1,6 @@
 import { Participant } from './participant.ts';
 import { Room } from './room.ts';
+import { Timer } from './timer.ts';
 
 interface WSMessage {
 	message_type: string;
@@ -33,16 +34,16 @@ export class ParticipantUpdateMessage implements WSMessage {
 }
 
 export enum TimerUpdateType {
-	TimerStart = 'TimerStart'
+	TimerStart = 'TimerStart',
+	TimerStop = 'TimerStop'
 }
 
-export class TimerStartMessage implements WSMessage {
+export class TimerUpdateMessage implements WSMessage {
 	message_type: string;
-	content: object;
+	content: Timer;
 
-	constructor(timestamp: number) {
-		this.message_type = TimerUpdateType.TimerStart;
-		this.content = {};
-		// this.content = timestamp;
+	constructor(timer: Timer) {
+		this.message_type = 'TimerUpdate';
+		this.content = timer;
 	}
 }

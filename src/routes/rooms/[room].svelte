@@ -3,7 +3,15 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 
-	let roomName, participants, user, ws, pictureInput, timeRemaining;
+	let roomName, participants, user, ws, pictureInput;
+	let timerStatus = {
+		remaining: 0,
+		state: 'Stopped',
+		lastStartTime: 0,
+		duration: 0
+	};
+	let localRemaining = 0;
+	let localInterval = null;
 
 	if (browser) {
 		user = window.localStorage.getItem('user');
@@ -31,7 +39,7 @@
 				case 'RoomConnection':
 					roomName = msg.content.url.replace('/', '');
 					participants = msg.content.participants;
-					timeRemaining = msg.content.timer.remaining;
+					handleTimerUpdate(msg.content.timer);
 					break;
 				case 'ParticipantAdded':
 					const add_uuid = msg.content.uuid;
@@ -52,6 +60,9 @@
 						updatedParticipants[upd_uuid] = msg.content;
 						participants = updatedParticipants;
 					}
+					break;
+				case 'TimerUpdate':
+					handleTimerUpdate(msg.content);
 					break;
 				default:
 					console.log(msg);
@@ -109,16 +120,32 @@
 		return `${toIntegerWithPrependZero(m)}:${toIntegerWithPrependZero(s)}`;
 	};
 
-	const handleStartTimer = () => {
+	const handleTriggerTimer = () => {
 		if (ws) {
 			ws.send(
 				JSON.stringify({
-					message_type: 'TimerStart',
+					message_type: timerStatus.state == 'Stopped' ? 'TimerStart' : 'TimerStop',
 					content: {
 						timestamp: new Date().getTime()
 					}
 				})
 			);
+		}
+	};
+
+	const handleTimerUpdate = (newTimerStatus) => {
+		const currentStatus = timerStatus.state;
+		const newStatus = newTimerStatus.state;
+		timerStatus = newTimerStatus;
+		if (currentStatus == 'Stopped' && newStatus == 'Running') {
+			if (localInterval) clearInterval(localInterval);
+			localRemaining = timerStatus.remaining;
+			localInterval = setInterval(() => {
+				let delta = new Date().getTime() - newTimerStatus.lastStartTime;
+				timerStatus.remaining = localRemaining - delta;
+			}, 200);
+		} else if (currentStatus == 'Running' && newStatus == 'Stopped') {
+			if (localInterval) clearInterval(localInterval);
 		}
 	};
 </script>
@@ -151,8 +178,10 @@
 		{/if}
 	</div>
 	<div class="timer-container">
-		<h2>{formatTime(timeRemaining)}</h2>
-		<button on:click={handleStartTimer}>Start</button>
+		<h2>{formatTime(timerStatus.remaining)}</h2>
+		<button on:click={handleTriggerTimer}
+			>{timerStatus.state == 'Stopped' ? 'Start' : 'Stop'}</button
+		>
 	</div>
 	<div class="participants-container">
 		{#if participants}
