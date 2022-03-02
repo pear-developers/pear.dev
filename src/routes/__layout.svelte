@@ -1,5 +1,5 @@
 <script>
-	import TopBar from '$lib/topBar.svelte';
+	import TopBar from '$lib/Topbar.svelte';
 </script>
 
 <svelte:head>
