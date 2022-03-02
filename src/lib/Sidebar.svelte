@@ -1,7 +1,7 @@
 <script>
 	import { fly } from 'svelte/transition';
 
-	export let show = true;
+	export let show = false;
 
 	let width;
 </script>
