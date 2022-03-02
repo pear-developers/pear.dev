@@ -10,7 +10,7 @@
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
 		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
 		"test:back": "deno test server/",
-		"test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile"
+		"test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile --exclude=tests/"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
