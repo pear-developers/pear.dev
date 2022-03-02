@@ -17,8 +17,8 @@ export class Room {
 
 	constructor(url: string, creator: Participant) {
 		this.url = url;
-		this.addParticipant(creator);
 		this.timer = new Timer(5_999);
+		this.addParticipant(creator);
 	}
 
 	addParticipant(participant: Participant) {
@@ -80,5 +80,13 @@ export class Room {
 				this.participants[key].ws.send(JSON.stringify(message));
 			}
 		}
+	}
+
+	toJSON() {
+		return {
+			url: this.url,
+			participants: this.participants,
+			timer: this.timer
+		};
 	}
 }
