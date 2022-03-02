@@ -21,7 +21,7 @@
 
 <style>
 	header {
-		padding: 1rem 2rem;
+		padding: 1.5rem;
 
 		display: flex;
 		justify-content: space-between;
@@ -33,6 +33,7 @@
 	button {
 		border: none;
 		padding: 0;
+		margin-right: 1rem;
 
 		background: transparent;
 
