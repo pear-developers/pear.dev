@@ -1,4 +1,4 @@
-enum TimerState {
+export enum TimerState {
 	Running = 'Running',
 	Stopped = 'Stopped'
 }
@@ -26,11 +26,6 @@ export class Timer {
 		this.remaining -= delta;
 		if (this.remaining <= 0) this.remaining = this.duration;
 		this.state = TimerState.Stopped;
-	}
-
-	restart(timestamp: number) {
-		this.remaining = this.duration;
-		this.start(timestamp);
 	}
 
 	toJSON() {
