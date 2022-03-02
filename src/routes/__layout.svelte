@@ -1,3 +1,7 @@
+<script>
+	import TopBar from '$lib/topBar.svelte';
+</script>
+
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -7,4 +11,12 @@
 	/>
 </svelte:head>
 
+<TopBar />
+
 <slot />
+
+<style>
+	:root {
+		background-color: #f6fcff;
+	}
+</style>
