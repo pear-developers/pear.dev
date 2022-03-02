@@ -3,7 +3,8 @@ import {
 	ParticipantUpdateMessage,
 	ParticipantUpdateType,
 	TimerUpdateMessage,
-	TimerUpdateType
+	TimerUpdateType,
+	WSMessage
 } from './message.ts';
 import { WebSocketClient } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
 import { Timer } from './timer.ts';
@@ -23,16 +24,11 @@ export class Room {
 		if (!(participant.uuid in this.participants)) {
 			this.participants[participant.uuid] = participant;
 
-			for (const key in this.participants) {
-				if (key != participant.uuid) {
-					this.participants[key].ws.send(
-						JSON.stringify(
-							new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantAdded, participant)
-						)
-					);
-				}
-			}
-
+			this.broadcast(
+				new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantAdded, participant),
+				false,
+				participant.uuid
+			);
 			this.bindParticipantWS(participant.ws);
 		}
 	}
@@ -41,15 +37,11 @@ export class Room {
 		if (uuid in this.participants) {
 			const participant = this.participants[uuid];
 			delete this.participants[uuid];
-			for (const key in this.participants) {
-				if (key != uuid) {
-					this.participants[key].ws.send(
-						JSON.stringify(
-							new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantRemoved, participant)
-						)
-					);
-				}
-			}
+			this.broadcast(
+				new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantRemoved, participant),
+				false,
+				uuid
+			);
 		}
 		return Object.keys(this.participants).length === 0;
 	}
@@ -59,35 +51,32 @@ export class Room {
 			const data = JSON.parse(msg);
 			switch (data.message_type) {
 				case ParticipantUpdateType.ParticipantInfoUpdate:
-					for (const key in this.participants) {
-						if (key != data.content.uuid) {
-							this.participants[key].ws.send(
-								JSON.stringify(
-									new ParticipantUpdateMessage(
-										ParticipantUpdateType.ParticipantInfoUpdate,
-										data.content
-									)
-								)
-							);
-						}
-					}
+					this.broadcast(
+						new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantInfoUpdate, data.content),
+						false,
+						data.content.uuid
+					);
 					this.participants[data.content.uuid].updateInfo(data.content.name, data.content.picture);
 					break;
 				case TimerUpdateType.TimerStart:
 					this.timer.start(data.content.timestamp);
-					for (const key in this.participants) {
-						this.participants[key].ws.send(JSON.stringify(new TimerUpdateMessage(this.timer)));
-					}
+					this.broadcast(new TimerUpdateMessage(this.timer), true);
 					break;
 				case TimerUpdateType.TimerStop:
 					this.timer.stop(data.content.timestamp);
-					for (const key in this.participants) {
-						this.participants[key].ws.send(JSON.stringify(new TimerUpdateMessage(this.timer)));
-					}
+					this.broadcast(new TimerUpdateMessage(this.timer), true);
 					break;
 				default:
 					return;
 			}
 		});
+	}
+
+	broadcast(message: WSMessage, toSelf: boolean, uuid?: string) {
+		for (const key in this.participants) {
+			if (toSelf || (!toSelf && key != uuid)) {
+				this.participants[key].ws.send(JSON.stringify(message));
+			}
+		}
 	}
 }

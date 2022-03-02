@@ -15,6 +15,8 @@ export class Server {
 	}
 
 	onConnection(ws: WebSocketClient, request: string) {
+		if (request.split('?').length != 2) return;
+
 		const roomUrl = request.split('?')[0];
 		const params = new URLSearchParams(request.split('?')[1]);
 		const client_uuid = params.get('client_id');

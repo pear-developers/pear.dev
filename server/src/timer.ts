@@ -28,11 +28,6 @@ export class Timer {
 		this.state = TimerState.Stopped;
 	}
 
-	restart(timestamp: number) {
-		this.remaining = this.duration;
-		this.start(timestamp);
-	}
-
 	toJSON() {
 		return {
 			remaining: this.remaining,

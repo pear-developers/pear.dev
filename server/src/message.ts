@@ -2,7 +2,7 @@ import { Participant } from './participant.ts';
 import { Room } from './room.ts';
 import { Timer } from './timer.ts';
 
-interface WSMessage {
+export interface WSMessage {
 	message_type: string;
 	content: object;
 }
