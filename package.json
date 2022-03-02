@@ -8,7 +8,9 @@
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+		"format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
+		"test:back": "deno test server/",
+		"test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",

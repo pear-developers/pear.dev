@@ -1,4 +1,4 @@
-enum TimerState {
+export enum TimerState {
 	Running = 'Running',
 	Stopped = 'Stopped'
 }
