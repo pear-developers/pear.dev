@@ -16,7 +16,7 @@ Deno.test('Room: AddParticipant should send room data', () => {
 	assertEquals(Object.keys(ws.sent).length, 1);
 	assertEquals(
 		ws.sent[0],
-		'{"message_type":"RoomConnection","content":{"url":"url","participants":{"uuid":{"uuid":"uuid","name":"name","picture":"picture"}}}}'
+		'{"message_type":"RoomConnection","content":{"url":"url","participants":{"uuid":{"uuid":"uuid","name":"name","picture":"picture"}},"timer":{"remaining":5999,"state":"Stopped","lastStartTime":-1,"duration":5999}}}'
 	);
 });
 
