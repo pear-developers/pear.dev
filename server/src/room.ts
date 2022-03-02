@@ -2,6 +2,7 @@ import { Participant } from './participant.ts';
 import {
 	ParticipantUpdateMessage,
 	ParticipantUpdateType,
+	RoomConnectionMessage,
 	TimerUpdateMessage,
 	TimerUpdateType,
 	WSMessage
@@ -23,6 +24,7 @@ export class Room {
 	addParticipant(participant: Participant) {
 		if (!(participant.uuid in this.participants)) {
 			this.participants[participant.uuid] = participant;
+			participant.ws.send(JSON.stringify(new RoomConnectionMessage(this)));
 
 			this.broadcast(
 				new ParticipantUpdateMessage(ParticipantUpdateType.ParticipantAdded, participant),
@@ -59,11 +61,11 @@ export class Room {
 					this.participants[data.content.uuid].updateInfo(data.content.name, data.content.picture);
 					break;
 				case TimerUpdateType.TimerStart:
-					this.timer.start(data.content.timestamp);
+					this.timer.start(parseInt(data.content.timestamp));
 					this.broadcast(new TimerUpdateMessage(this.timer), true);
 					break;
 				case TimerUpdateType.TimerStop:
-					this.timer.stop(data.content.timestamp);
+					this.timer.stop(parseInt(data.content.timestamp));
 					this.broadcast(new TimerUpdateMessage(this.timer), true);
 					break;
 				default:

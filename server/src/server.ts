@@ -28,8 +28,6 @@ export class Server {
 
 			if (roomUrl in this.rooms) this.rooms[roomUrl].addParticipant(participant);
 			else this.rooms[roomUrl] = new Room(roomUrl, participant);
-
-			ws.send(JSON.stringify(new RoomConnectionMessage(this.rooms[roomUrl])));
 		}
 
 		ws.on('close', () => {

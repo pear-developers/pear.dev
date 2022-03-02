@@ -6,7 +6,7 @@ import {
 import { WebSocketClient } from 'https://deno.land/x/websocket@v0.1.3/mod.ts';
 
 export class InMemoryWebSocketClient extends EventEmitter implements WebSocketClient {
-	onEvents: Record<string | symbol, GenericFunction | WrappedFunction> = {};
+	onEvents: Record<string | symbol, GenericFunction> = {};
 	sent: string[] = [];
 
 	send(message: string | Uint8Array): void {
@@ -50,7 +50,7 @@ export class InMemoryWebSocketClient extends EventEmitter implements WebSocketCl
 		throw new Error('Method not implemented.');
 	}
 	public on(eventName: string | symbol, listener: GenericFunction | WrappedFunction): this {
-		this.onEvents[eventName] = listener;
+		this.onEvents[eventName] = listener as GenericFunction;
 		return this;
 	}
 	public once(eventName: string | symbol, listener: GenericFunction): this {
