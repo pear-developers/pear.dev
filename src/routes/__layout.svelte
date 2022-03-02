@@ -1,17 +1,21 @@
 <script>
-	import TopBar from '$lib/Topbar.svelte';
+	import Topbar from '$lib/Topbar.svelte';
+	import Sidebar from '$lib/Sidebar.svelte';
+
+	let show_sidebar;
 </script>
 
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Poppins:wght@400;600;700&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Poppins:wght@400;600;700&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
 
-<TopBar />
+<Topbar bind:show_sidebar />
+<Sidebar bind:show={show_sidebar} />
 
 <slot />
 
