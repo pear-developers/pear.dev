@@ -1,3 +1,3 @@
-import { Server } from './src/server.ts';
+import { Server } from "./src/server.ts";
 
-const s = new Server(5000);
+const _ = new Server(5000);
