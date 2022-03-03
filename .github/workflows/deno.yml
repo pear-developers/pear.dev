@@ -47,5 +47,6 @@ jobs:
           directory: .cov_profile/
           files: cov_profile.lcov
           flags: unittests
-          name: codecov-umbrella
+          name: pear.dev-codecov
           verbose: true
+          fail_ci_if_error: true
