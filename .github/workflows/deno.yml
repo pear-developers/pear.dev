@@ -10,9 +10,9 @@ name: Backend Test
 
 on:
   push:
-    branches: [release, development]
+    branches: [development]
   pull_request:
-    branches: [release, development]
+    branches: [development]
 
 jobs:
   test:
@@ -48,5 +48,4 @@ jobs:
           files: cov_profile.lcov
           flags: unittests
           name: codecov-umbrella
-          path_to_write_report: .cov_profile/codecov_report.txt
           verbose: true
