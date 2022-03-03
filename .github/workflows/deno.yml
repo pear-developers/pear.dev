@@ -1,0 +1,52 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will install Deno then run Deno lint and test.
+# For more information see: https://github.com/denoland/setup-deno
+
+name: Deno Test
+
+on:
+  push:
+    branches: [release, development]
+  pull_request:
+    branches: [release, development]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
+
+      - name: Setup Deno
+        # uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@004814556e37c54a2f6e31384c9e18e983317366
+        with:
+          deno-version: v1.x
+
+      - name: Verify formatting
+        run: deno fmt server/ --check
+
+      - name: Run linter
+        run: deno lint server/
+
+      - name: Run tests
+        run: deno test server/ -A --unstable --coverage=.cov_profile
+        
+      - name: Generate coverage report
+        run: deno coverage .cov_profile --lcov --exclude=tests/ > .cov_profile/cov_profile.lcov
+        
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v2
+#         with:
+#           token: ${{ secrets.CODECOV_TOKEN }}
+#           directory: .cov_profile/
+#           files: cov_profile.lcov
+#           flags: unittests
+#           name: codecov-umbrella
+#           path_to_write_report: .cov_profile/codecov_report.txt
+#           verbose: true
