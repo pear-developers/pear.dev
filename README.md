@@ -3,6 +3,15 @@
     <img width="360" src="./static/type-logo.svg" alt="pear.dev logo">
   </a>
 </p>
+<br/>
+<p align="center">
+  <a href="https://codecov.io/gh/zoford/pear.dev">
+    <img src="https://codecov.io/gh/zoford/pear.dev/branch/release/graph/badge.svg?token=MYB5NK6P37"/>
+  </a>
+  <a href="https://gitmoji.dev">
+    <img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg" alt="Gitmoji">
+  </a>
+</p>
 
 # 🍐 pear.dev
 
