@@ -3,8 +3,9 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import user from '../../stores/user';
+	import roomName from '../../stores/roomName';
 
-	let roomName, participants, ws;
+	let participants, ws;
 	let timerStatus = {
 		remaining: 0,
 		state: 'Stopped',
@@ -29,7 +30,7 @@
 			let msg = JSON.parse(message.data);
 			switch (msg.message_type) {
 				case 'RoomConnection':
-					roomName = msg.content.url.replace('/', '');
+					$roomName = msg.content.url.replace('/', '');
 					participants = msg.content.participants;
 					handleTimerUpdate(msg.content.timer);
 					break;
@@ -145,11 +146,6 @@
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <div class="content">
-	<div class="room-header-container">
-		{#if roomName}
-			<h1>{roomName}</h1>
-		{/if}
-	</div>
 	<div class="timer-container">
 		<h2>{formatTime(timerStatus.remaining)}</h2>
 		<button on:click={handleTriggerTimer}
