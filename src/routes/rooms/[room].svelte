@@ -64,7 +64,7 @@
 
 
 
-	$: if(ws !== null || ws !== undefined) {
+	$: if(ws !== null && ws !== undefined && ws.readyState === ws.OPEN) {
 		ws.send(JSON.stringify({
 			message_type: 'ParticipantInfoUpdate',
 			content: $user
