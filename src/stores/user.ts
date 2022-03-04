@@ -19,7 +19,7 @@ if (browser) {
 		}
 	);
 
-	user.subscribe((data) => (localStorage.setItem('user', JSON.stringify(data))));
+	user.subscribe((data) => localStorage.setItem('user', JSON.stringify(data)));
 }
 
 export default user;
