@@ -114,7 +114,7 @@ Deno.test("Room: BindParticipantWS should update participant info and broadcast 
 
   assertEquals(room.participants["uuid"].name, "nameUpdate");
   assertEquals(room.participants["uuid"].picture, "pictureUpdate");
-  assertEquals(Object.keys(WithouthInitialMessage(ws.sent)).length, 0);
+  assertEquals(Object.keys(WithouthInitialMessage(ws.sent)).length, 1);
   assertEquals(Object.keys(WithouthInitialMessage(ws2.sent)).length, 1);
 });
 

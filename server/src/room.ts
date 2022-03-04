@@ -64,7 +64,7 @@ export class Room {
               ParticipantUpdateType.ParticipantInfoUpdate,
               data.content,
             ),
-            false,
+            true,
             data.content.uuid,
           );
           this.participants[data.content.uuid].updateInfo(
