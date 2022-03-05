@@ -19,8 +19,8 @@
 
 <slot />
 
-<style>
-	:root {
-		background-color: #f6fcff;
+<style lang="scss" global>
+	body {
+		background-color: $primary-background;
 	}
 </style>
