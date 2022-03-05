@@ -207,7 +207,7 @@
 	<source src="/jingle.mp3" type="audio/mpeg" />
 </audio>
 
-<style>
+<style lang="scss">
 	section {
 		width: 100%;
 		display: flex;
@@ -221,35 +221,38 @@
 		font-size: 64px;
 		font-weight: 600;
 
-		color: #3f3838;
+		color: $dark-text;
 	}
 
 	.control-buttons {
 		display: flex;
 		justify-content: center;
-	}
-	.control-buttons button {
-		display: inline-flex;
-		justify-content: center;
-		align-items: center;
 
-		width: 45px;
-		height: 45px;
-		border: none;
-		border-radius: 5px;
+		button {
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
 
-		margin-right: 0.5rem;
-		padding: 0.8rem;
+			width: 45px;
+			height: 45px;
+			border: none;
+			border-radius: 5px;
 
-		background-color: #e2f6e5;
+			margin-right: 0.5rem;
+			padding: 0.8rem;
 
-		cursor: pointer;
-	}
-	.control-buttons button:disabled {
-		cursor: not-allowed;
-	}
-	.control-buttons button svg {
-		fill: #94dc7b;
+			background-color: $primary-background;
+
+			cursor: pointer;
+
+			svg {
+				fill: $primary-text;
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+			}
+		}
 	}
 
 	.user-picture-container {
@@ -270,10 +273,10 @@
 		display: flex;
 		flex-direction: column;
 		padding: 0 4em;
-	}
 
-	.content ul {
-		list-style-type: none;
+		ul {
+			list-style-type: none;
+		}
 	}
 
 	.participant-container {

@@ -1,7 +1,16 @@
 import adapter from '@sveltejs/adapter-auto';
+import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	preprocess: preprocess({
+		scss: {
+			prependData: `
+				@import 'the-new-css-reset/css/reset.css';
+				@import 'src/styles/variables.scss';
+			`
+		}
+	}),
 	kit: {
 		adapter: adapter()
 	}

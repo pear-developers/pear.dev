@@ -51,7 +51,7 @@
 					>
 						<path
 							d="M11.608 0.998576C12.9387 -0.332859 15.0982 -0.332859 16.4289 0.998576L17.002 1.5725C18.3327 2.90407 18.3327 5.06291 17.002 6.39354L7.66319 15.7364C7.25118 16.1436 6.74446 16.4419 6.18565 16.6029L1.44997 17.9572C1.05217 18.0709 0.625961 17.9572 0.332349 17.6258C0.0434725 17.3748 -0.0701842 16.9486 0.0434722 16.5508L1.39788 11.8155C1.55889 11.2567 1.85724 10.7501 2.26451 10.3381L11.608 0.998576ZM14.7809 2.60575C14.3784 2.16205 13.6586 2.16205 13.2134 2.60575L11.8353 3.98326L14.0185 6.16625L15.3966 4.74565C15.8417 4.34314 15.8417 3.62337 15.3966 3.17967L14.7809 2.60575ZM3.58576 12.4406L2.79017 15.2107L5.56054 14.4152C5.74997 14.3631 5.91572 14.2637 6.05305 14.1263L12.4131 7.77153L10.2299 5.58854L3.87464 11.9481C3.73731 12.0854 3.63786 12.2512 3.58576 12.4406Z"
-							fill="#3F3838"
+							fill="$dark-text"
 						/>
 					</svg>
 				</div>
@@ -68,7 +68,7 @@
 	</aside>
 {/if}
 
-<style>
+<style lang="scss">
 	aside {
 		position: fixed;
 		overflow-y: auto;
@@ -79,40 +79,43 @@
 		min-width: 300px;
 		width: 20vw;
 		max-width: 400px;
-		border-left: 1px solid #cddde4;
+		border-left: 1px solid $border-light;
 
-		background: #fff;
+		background: $light-background;
 	}
 
 	header {
 		padding: 2.5rem;
-		border-bottom: 1px solid #bfbfbf;
+		border-bottom: 1px solid $border-dark;
 
 		display: flex;
 		align-items: center;
-	}
-	header h1 {
-		margin: 0 auto;
 
-		color: #3f3838;
+		h1 {
+			margin: 0 auto;
 
-		font-family: 'Josefin Sans', sans-serif;
-		font-weight: 400;
-		font-size: 32px;
-		line-height: 0;
-	}
-	header button {
-		border: none;
-		padding: 0;
+			color: $dark-text;
 
-		background-color: transparent;
+			font-family: 'Josefin Sans', sans-serif;
+			font-weight: 400;
+			font-size: 32px;
+			line-height: 0;
+		}
 
-		cursor: pointer;
-	}
-	header button svg {
-		height: 32px;
+		button {
+			border: none;
+			padding: 0;
 
-		fill: #3f3838;
+			background-color: transparent;
+
+			cursor: pointer;
+
+			svg {
+				height: 32px;
+
+				fill: $dark-text;
+			}
+		}
 	}
 
 	section {
@@ -122,66 +125,72 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
+		img {
+			width: 100%;
+			border-radius: inherit;
+
+			transform: border 0.3s;
+		}
+		input {
+			display: block;
+		}
 	}
-	section .picture-wrapper {
+
+	.picture-wrapper {
 		position: relative;
 		margin-bottom: 2rem;
 
 		box-sizing: border-box;
-		border: 10px solid #fff;
+		border: 10px solid $light-background;
 		border-radius: 100px;
 		width: 150px;
 		height: 150px;
 
 		transition: border-color 0.5s;
 		cursor: pointer;
-	}
-	section .picture-wrapper:hover {
-		border-color: #c9ffb5;
-	}
-	section .picture-wrapper:hover .edit-icon {
-		transform: scale(125%);
-	}
-	section .picture-wrapper .edit-icon {
-		position: absolute;
-		bottom: 0;
-		right: 0;
 
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-sizing: border-box;
-		border: 7px solid #fff;
-		border-radius: 100px;
-		width: 53px;
-		height: 53px;
+		.edit-icon {
+			position: absolute;
+			bottom: 0;
+			right: 0;
 
-		background-color: #83cc69;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			border: 7px solid $light-background;
+			border-radius: 100px;
+			width: 53px;
+			height: 53px;
 
-		transition: transform 0.3s;
-	}
-	section .picture-wrapper .edit-icon svg {
-		fill: #3f3838;
-		width: 18px;
-	}
-	section img {
-		width: 100%;
-		border-radius: inherit;
+			background-color: $primary-text;
 
-		transform: border 0.3s;
-	}
-	section input {
-		display: block;
+			transition: transform 0.3s;
+
+			svg {
+				fill: $dark-text;
+				width: 18px;
+			}
+		}
+
+		&:hover {
+			border-color: $primary-border;
+
+			.edit-icon {
+				transform: scale(125%);
+			}
+		}
 	}
 
 	.name-input {
 		outline: 0;
 		border: none;
-		border-bottom: 2px solid #3f3838;
+		border-bottom: 2px solid $dark-text;
 		width: auto;
 		width: 250px;
 
-		color: #3f3838;
+		color: $dark-text;
 
 		font-family: 'Poppins', sans-serif;
 		font-size: 32px;
@@ -189,8 +198,9 @@
 		text-align: center;
 
 		transition: border-width 0.1s;
-	}
-	.name-input:focus {
-		border-width: 4px;
+
+		&:focus {
+			border-width: 4px;
+		}
 	}
 </style>

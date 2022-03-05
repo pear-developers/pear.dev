@@ -5,7 +5,7 @@
 </script>
 
 <header>
-	<a href="/">
+	<a href="/" class="brand">
 		<img src="/type-logo.svg" alt="Pear logo with pear.dev text." />
 	</a>
 	{#if $roomName}
@@ -35,7 +35,7 @@
 	</button>
 </header>
 
-<style>
+<style lang="scss">
 	header {
 		padding: 1.5rem;
 
@@ -43,20 +43,23 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+
 	.room-name {
 		display: flex;
 		align-items: center;
-	}
-	.room-name h1 {
-		margin: 0 1rem 0 0;
 
-		color: #94dc7b;
+		h1 {
+			margin: 0 1rem 0 0;
 
-		font-family: 'Poppins', sans-serif;
-		font-weight: 500;
-		font-size: 48px;
+			color: $primary-text;
+
+			font-family: 'Poppins', sans-serif;
+			font-weight: 500;
+			font-size: 48px;
+		}
 	}
-	.room-name #copy-room-name-button {
+
+	#copy-room-name-button {
 		padding: 0.5rem 0.7rem;
 
 		display: flex;
@@ -65,23 +68,26 @@
 		border-radius: 50px;
 		height: fit-content;
 
-		background-color: #e2f6e5;
-		color: #94dc7b;
+		background-color: $primary-background;
+		color: $primary-text;
 
 		font-family: 'Poppins', sans-serif;
 		font-weight: 600;
 		font-size: 12px;
 
 		cursor: pointer;
+
+		svg {
+			margin-right: 0.4rem;
+			width: 20px;
+			fill: $primary-text;
+		}
 	}
-	.room-name #copy-room-name-button svg {
-		margin-right: 0.4rem;
-		width: 20px;
-		fill: #94dc7b;
-	}
-	a img {
+
+	.brand img {
 		height: 64px;
 	}
+
 	.settings-button {
 		border: none;
 		padding: 0;
@@ -91,14 +97,16 @@
 
 		cursor: pointer;
 		transition: transform 0.3s;
-	}
-	.settings-button:hover {
-		transform: rotate(60deg);
-	}
-	.settings-button svg {
-		vertical-align: middle;
-		width: 32px;
 
-		fill: #3f3838;
+		svg {
+			vertical-align: middle;
+			width: 32px;
+
+			fill: $dark-text;
+		}
+
+		&:hover {
+			transform: rotate(60deg);
+		}
 	}
 </style>

@@ -36,20 +36,33 @@
 	</a>
 </footer>
 
-<style>
+<style lang="scss">
 	header {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		margin-top: 10rem;
 		width: 100vw;
+
+		a {
+			display: inline-block;
+
+			background-color: $primary-text;
+			color: $primary-dark-text;
+
+			font-family: 'Poppins', sans-serif;
+			font-weight: 600;
+			font-size: 24px;
+			text-decoration: none;
+			cursor: pointer;
+		}
 	}
 	h1 {
 		overflow: hidden;
 		margin: 0;
 		width: auto;
 
-		color: #3f3838;
+		color: $dark-text;
 
 		font-family: 'Josefin Sans', sans-serif;
 		font-size: 64px;
@@ -58,7 +71,7 @@
 	p {
 		margin-top: 0;
 
-		color: #898989;
+		color: $secondary-text;
 
 		font-family: 'Poppins', sans-serif;
 		font-size: 32px;
@@ -79,10 +92,11 @@
 		width: 100vw;
 
 		text-align: center;
-	}
-	footer svg {
-		width: 32px;
-		fill: #898989;
+
+		svg {
+			width: 32px;
+			fill: $secondary-text;
+		}
 	}
 
 	header a,
@@ -94,41 +108,30 @@
 		border-radius: 3px;
 		width: 20vw;
 
-		background-color: #fff;
+		background-color: $light-background;
 
 		font-family: 'Poppins', sans-serif;
 		font-weight: 500;
 		font-size: 24px;
-	}
-	input:focus {
-		outline: none;
-	}
-	input::placeholder {
-		color: #bdbdbd;
-	}
 
-	header a {
-		display: inline-block;
-
-		background-color: #83cc69;
-		color: #57a83b;
-
-		font-family: 'Poppins', sans-serif;
-		font-weight: 600;
-		font-size: 24px;
-		text-decoration: none;
-		cursor: pointer;
+		&:focus {
+			outline: none;
+		}
+		&::placeholder {
+			color: $placeholder-text;
+		}
 	}
 
 	.input-group {
 		margin-top: 10px;
-		border: 3px solid #83cc69;
+		border: 3px solid $primary-text;
 		border-radius: 5px;
 
-		background-color: #83cc69;
-	}
-	.input-group :nth-child(2) {
-		border-top-left-radius: 0 !important;
-		border-bottom-left-radius: 0 !important;
+		background-color: $primary-text;
+
+		:nth-child(2) {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+		}
 	}
 </style>
