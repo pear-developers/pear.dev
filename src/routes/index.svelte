@@ -43,6 +43,19 @@
 		align-items: center;
 		margin-top: 10rem;
 		width: 100vw;
+
+		a {
+			display: inline-block;
+
+			background-color: $primary-text;
+			color: $primary-dark-text;
+
+			font-family: 'Poppins', sans-serif;
+			font-weight: 600;
+			font-size: 24px;
+			text-decoration: none;
+			cursor: pointer;
+		}
 	}
 	h1 {
 		overflow: hidden;
@@ -79,10 +92,11 @@
 		width: 100vw;
 
 		text-align: center;
-	}
-	footer svg {
-		width: 32px;
-		fill: $secondary-text;
+
+		svg {
+			width: 32px;
+			fill: $secondary-text;
+		}
 	}
 
 	header a,
@@ -99,25 +113,13 @@
 		font-family: 'Poppins', sans-serif;
 		font-weight: 500;
 		font-size: 24px;
-	}
-	input:focus {
-		outline: none;
-	}
-	input::placeholder {
-		color: $placeholder-text;
-	}
-
-	header a {
-		display: inline-block;
-
-		background-color: $primary-text;
-		color: $primary-dark-text;
-
-		font-family: 'Poppins', sans-serif;
-		font-weight: 600;
-		font-size: 24px;
-		text-decoration: none;
-		cursor: pointer;
+		
+		&:focus {
+			outline: none;
+		}
+		&::placeholder {
+			color: $placeholder-text;
+		}
 	}
 
 	.input-group {
@@ -126,9 +128,10 @@
 		border-radius: 5px;
 
 		background-color: $primary-text;
-	}
-	.input-group :nth-child(2) {
-		border-top-left-radius: 0 !important;
-		border-bottom-left-radius: 0 !important;
+		
+		:nth-child(2) {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+		}
 	}
 </style>

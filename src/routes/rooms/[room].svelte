@@ -227,29 +227,32 @@
 	.control-buttons {
 		display: flex;
 		justify-content: center;
-	}
-	.control-buttons button {
-		display: inline-flex;
-		justify-content: center;
-		align-items: center;
+	
+		button {
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
 
-		width: 45px;
-		height: 45px;
-		border: none;
-		border-radius: 5px;
+			width: 45px;
+			height: 45px;
+			border: none;
+			border-radius: 5px;
 
-		margin-right: 0.5rem;
-		padding: 0.8rem;
+			margin-right: 0.5rem;
+			padding: 0.8rem;
 
-		background-color: $primary-background;
+			background-color: $primary-background;
 
-		cursor: pointer;
-	}
-	.control-buttons button:disabled {
-		cursor: not-allowed;
-	}
-	.control-buttons button svg {
-		fill: $primary-text;
+			cursor: pointer;
+
+			svg {
+				fill: $primary-text;
+			}
+
+			&:disabled {
+				cursor: not-allowed;
+			}
+		}
 	}
 
 	.user-picture-container {
@@ -270,10 +273,10 @@
 		display: flex;
 		flex-direction: column;
 		padding: 0 4em;
-	}
 
-	.content ul {
-		list-style-type: none;
+	 	ul {
+			list-style-type: none;
+		}
 	}
 
 	.participant-container {

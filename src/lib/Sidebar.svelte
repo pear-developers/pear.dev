@@ -90,29 +90,32 @@
 
 		display: flex;
 		align-items: center;
-	}
-	header h1 {
-		margin: 0 auto;
 
-		color: $dark-text;
+		h1 {
+			margin: 0 auto;
 
-		font-family: 'Josefin Sans', sans-serif;
-		font-weight: 400;
-		font-size: 32px;
-		line-height: 0;
-	}
-	header button {
-		border: none;
-		padding: 0;
+			color: $dark-text;
 
-		background-color: transparent;
+			font-family: 'Josefin Sans', sans-serif;
+			font-weight: 400;
+			font-size: 32px;
+			line-height: 0;
+		}
 
-		cursor: pointer;
-	}
-	header button svg {
-		height: 32px;
+		button {
+			border: none;
+			padding: 0;
 
-		fill: $dark-text;
+			background-color: transparent;
+
+			cursor: pointer;
+
+			svg {
+				height: 32px;
+
+				fill: $dark-text;
+			}
+		}
 	}
 
 	section {
@@ -122,8 +125,19 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
+		img {
+			width: 100%;
+			border-radius: inherit;
+
+			transform: border 0.3s;
+		}
+		input {
+			display: block;
+		}
 	}
-	section .picture-wrapper {
+		
+	.picture-wrapper {
 		position: relative;
 		margin-bottom: 2rem;
 
@@ -135,43 +149,38 @@
 
 		transition: border-color 0.5s;
 		cursor: pointer;
-	}
-	section .picture-wrapper:hover {
-		border-color: $primary-border;
-	}
-	section .picture-wrapper:hover .edit-icon {
-		transform: scale(125%);
-	}
-	section .picture-wrapper .edit-icon {
-		position: absolute;
-		bottom: 0;
-		right: 0;
 
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		box-sizing: border-box;
-		border: 7px solid $light-background;
-		border-radius: 100px;
-		width: 53px;
-		height: 53px;
+		.edit-icon {
+			position: absolute;
+			bottom: 0;
+			right: 0;
 
-		background-color: $primary-text;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-sizing: border-box;
+			border: 7px solid $light-background;
+			border-radius: 100px;
+			width: 53px;
+			height: 53px;
 
-		transition: transform 0.3s;
-	}
-	section .picture-wrapper .edit-icon svg {
-		fill: $dark-text;
-		width: 18px;
-	}
-	section img {
-		width: 100%;
-		border-radius: inherit;
+			background-color: $primary-text;
 
-		transform: border 0.3s;
-	}
-	section input {
-		display: block;
+			transition: transform 0.3s;
+
+			svg {
+				fill: $dark-text;
+				width: 18px;
+			}
+		}
+		
+		&:hover {
+			border-color: $primary-border;
+
+			.edit-icon {
+				transform: scale(125%);
+			}
+		}
 	}
 
 	.name-input {
@@ -189,8 +198,9 @@
 		text-align: center;
 
 		transition: border-width 0.1s;
-	}
-	.name-input:focus {
-		border-width: 4px;
+
+		&:focus {
+			border-width: 4px;
+		}
 	}
 </style>
