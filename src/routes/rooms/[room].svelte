@@ -207,7 +207,7 @@
 	<source src="/jingle.mp3" type="audio/mpeg" />
 </audio>
 
-<style>
+<style lang="scss">
 	section {
 		width: 100%;
 		display: flex;
@@ -221,7 +221,7 @@
 		font-size: 64px;
 		font-weight: 600;
 
-		color: #3f3838;
+		color: $dark-text;
 	}
 
 	.control-buttons {
@@ -241,7 +241,7 @@
 		margin-right: 0.5rem;
 		padding: 0.8rem;
 
-		background-color: #e2f6e5;
+		background-color: $primary-background;
 
 		cursor: pointer;
 	}
@@ -249,7 +249,7 @@
 		cursor: not-allowed;
 	}
 	.control-buttons button svg {
-		fill: #94dc7b;
+		fill: $primary-text;
 	}
 
 	.user-picture-container {

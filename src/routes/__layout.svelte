@@ -21,6 +21,6 @@
 
 <style lang="scss" global>
 	body {
-		background-color: $primary-background;
+		background-color: $body-background;
 	}
 </style>

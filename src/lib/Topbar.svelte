@@ -35,7 +35,7 @@
 	</button>
 </header>
 
-<style>
+<style lang="scss">
 	header {
 		padding: 1.5rem;
 
@@ -50,7 +50,7 @@
 	.room-name h1 {
 		margin: 0 1rem 0 0;
 
-		color: #94dc7b;
+		color: $primary-text;
 
 		font-family: 'Poppins', sans-serif;
 		font-weight: 500;
@@ -65,8 +65,8 @@
 		border-radius: 50px;
 		height: fit-content;
 
-		background-color: #e2f6e5;
-		color: #94dc7b;
+		background-color: $primary-background;
+		color: $primary-text;
 
 		font-family: 'Poppins', sans-serif;
 		font-weight: 600;
@@ -77,7 +77,7 @@
 	.room-name #copy-room-name-button svg {
 		margin-right: 0.4rem;
 		width: 20px;
-		fill: #94dc7b;
+		fill: $primary-text;
 	}
 	a img {
 		height: 64px;
@@ -99,6 +99,6 @@
 		vertical-align: middle;
 		width: 32px;
 
-		fill: #3f3838;
+		fill: $dark-text;
 	}
 </style>
