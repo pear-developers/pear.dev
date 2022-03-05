@@ -136,7 +136,7 @@
 			display: block;
 		}
 	}
-		
+
 	.picture-wrapper {
 		position: relative;
 		margin-bottom: 2rem;
@@ -173,7 +173,7 @@
 				width: 18px;
 			}
 		}
-		
+
 		&:hover {
 			border-color: $primary-border;
 

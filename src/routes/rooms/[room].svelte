@@ -227,7 +227,7 @@
 	.control-buttons {
 		display: flex;
 		justify-content: center;
-	
+
 		button {
 			display: inline-flex;
 			justify-content: center;
@@ -274,7 +274,7 @@
 		flex-direction: column;
 		padding: 0 4em;
 
-	 	ul {
+		ul {
 			list-style-type: none;
 		}
 	}

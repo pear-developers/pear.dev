@@ -58,7 +58,7 @@
 			font-size: 48px;
 		}
 	}
-	
+
 	#copy-room-name-button {
 		padding: 0.5rem 0.7rem;
 

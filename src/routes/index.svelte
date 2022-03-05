@@ -113,7 +113,7 @@
 		font-family: 'Poppins', sans-serif;
 		font-weight: 500;
 		font-size: 24px;
-		
+
 		&:focus {
 			outline: none;
 		}
@@ -128,7 +128,7 @@
 		border-radius: 5px;
 
 		background-color: $primary-text;
-		
+
 		:nth-child(2) {
 			border-top-left-radius: 0 !important;
 			border-bottom-left-radius: 0 !important;
