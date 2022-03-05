@@ -5,7 +5,10 @@ import preprocess from 'svelte-preprocess';
 const config = {
 	preprocess: preprocess({
 		scss: {
-			prependData: `@import  'src/styles/variables.scss';`
+			prependData: `
+				@import 'the-new-css-reset/css/reset.css';
+				@import 'src/styles/variables.scss';
+			`
 		}
 	}),
 	kit: {
