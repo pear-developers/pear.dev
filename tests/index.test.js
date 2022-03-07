@@ -31,10 +31,22 @@ describe("Index", () => {
     const button = getByText("GO");
 
     await fireEvent.input(input, { target: { value: "test-room-name" } });
-    await fireEvent.click(button);
 
     expect(button.href).toContain("/rooms/test-room-name");
     expect(button).toHaveAttribute("disabled", "false");
+  });
+
+  test("sets button link to room name", async () => {
+    const { getByText, getByRole } = render(Index);
+    const input = getByRole("textbox");
+    const button = getByText("GO");
+
+    const onClick = jest.fn();
+    button.addEventListener("click", onClick);
+
+    await fireEvent.change(input, { target: { value: "test-room-name" } });
+
+    expect(onClick).toHaveBeenCalled;
   });
 
   test("disables button if no room name", () => {
