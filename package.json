@@ -9,6 +9,7 @@
     "preview": "svelte-kit preview",
     "lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
+    "test": "npm run test:back && npm run test:front",
     "test:back": "deno test server/",
     "test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile --exclude=tests/",
     "test:front": "jest tests/",

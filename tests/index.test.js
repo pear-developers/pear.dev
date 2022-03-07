@@ -3,7 +3,7 @@
  */
 
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/svelte";
+import { fireEvent, render } from "@testing-library/svelte";
 import Index from "../src/routes/index.svelte";
 
 describe("Index", () => {
@@ -23,5 +23,24 @@ describe("Index", () => {
 
     const button = getByText("GO");
     expect(button).toBeInTheDocument();
+  });
+
+  test("sets button link to room name", async () => {
+    const { getByText, getByRole } = render(Index);
+    const input = getByRole("textbox");
+    const button = getByText("GO");
+
+    await fireEvent.input(input, { target: { value: "test-room-name" } });
+    await fireEvent.click(button);
+
+    expect(button.href).toContain("/rooms/test-room-name");
+    expect(button).toHaveAttribute("disabled", "false");
+  });
+
+  test("disables button if no room name", () => {
+    const { getByText } = render(Index);
+    const button = getByText("GO");
+
+    expect(button).toHaveAttribute("disabled", "true");
   });
 });

@@ -22,7 +22,7 @@
 				on:change={() => {
 					createRoom.click();
 				}}
-			/><a bind:this={createRoom} href="/rooms/{room}">GO</a>
+			/><a disabled={room == ""} bind:this={createRoom} href="/rooms/{room}">GO</a>
 		</div>
 	</header>
 </main>
@@ -54,7 +54,15 @@
 			font-weight: 600;
 			font-size: 24px;
 			text-decoration: none;
-			cursor: pointer;
+			cursor: pointer;			
+
+			&[disabled="true"] {
+				cursor: not-allowed;
+
+				&:active {
+  					pointer-events: none;
+				}
+			}
 		}
 	}
 	h1 {
