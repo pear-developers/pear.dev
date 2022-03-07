@@ -36,7 +36,7 @@ describe("Index", () => {
     expect(button).toHaveAttribute("disabled", "false");
   });
 
-  test("sets button link to room name", async () => {
+  test("clicks on button when input change", async () => {
     const { getByText, getByRole } = render(Index);
     const input = getByRole("textbox");
     const button = getByText("GO");
