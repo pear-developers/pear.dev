@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /build
-/.svelte-kit
+/.svelte-kit/generated
+/.svelte-kit/runtime
 /package
 .env
 .env.*
