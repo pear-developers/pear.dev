@@ -1,61 +1,44 @@
 {
-  "name": "pear.dev",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "svelte-kit dev",
-    "server": "deno run --allow-net server/index.ts",
-    "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
-    "lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-    "format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
-    "test": "npm run test:back && npm run test:front",
-    "test:back": "deno test server/",
-    "test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile --exclude=tests/",
-    "test:front": "jest tests/",
-    "test:front:coverage": "jest --coverage tests/"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
-    "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "next",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/svelte": "^3.0.3",
-    "babel-jest": "^27.5.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-svelte3": "^3.2.1",
-    "jest": "^27.5.1",
-    "prettier": "^2.5.1",
-    "prettier-plugin-svelte": "^2.5.0",
-    "sass": "^1.49.9",
-    "svelte": "^3.44.0",
-    "svelte-jester": "^2.3.2",
-    "svelte-preprocess": "^4.10.4",
-    "the-new-css-reset": "^1.5.1",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.6.2"
-  },
-  "type": "module",
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.svelte$": [
-        "svelte-jester",
-        {
-          "preprocess": true
-        }
-      ],
-      "^.+\\.ts$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "svelte"
-    ],
-    "testPathIgnorePatterns": ["server"]
-  },
-  "setupFilesAfterEnv": [
-    "@testing-library/jest-dom/extend-expect"
-  ]
+	"name": "pear.dev",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"server": "deno run --allow-net server/index.ts",
+		"build": "svelte-kit build",
+		"package": "svelte-kit package",
+		"preview": "svelte-kit preview",
+		"lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+		"format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. .",
+		"test:back": "deno test server/",
+		"test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile --exclude=tests/",
+		"test:front": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json",
+		"test:front:coverage": "jest --coverage tests/",
+		"test:watch": "npm run test -- --watch"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.14.0",
+		"@babel/preset-env": "^7.14.0",
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"@testing-library/jest-dom": "^5.14.0",
+		"@testing-library/svelte": "^3.0.0",
+		"@types/jest": "^27.4.1",
+		"@types/testing-library__jest-dom": "^5.14.0",
+		"babel-jest": "^27.0.0",
+		"cross-env": "^7.0.3",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-svelte3": "^3.2.1",
+		"jest": "^27.0.0",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.5.0",
+		"sass": "^1.49.9",
+		"svelte": "^3.44.0",
+		"svelte-jester": "^2.0.1",
+		"svelte-preprocess": "^4.10.4",
+		"the-new-css-reset": "^1.5.1",
+		"ts-jest": "^27.0.0",
+		"typescript": "^4.6.2"
+	},
+	"type": "module"
 }
