@@ -7,9 +7,21 @@ import { render } from "@testing-library/svelte";
 import Index from "../src/routes/index.svelte";
 
 describe("Index", () => {
-  test("shows proper landing page when rendered", () => {
-    const { getByText } = render(Index);
+  test("shows content when rendered", () => {
+    const { getByText, getByAltText, getByRole } = render(Index);
 
     expect(getByText("PEAR.DEV")).toBeInTheDocument();
+    expect(getByText("Timing is everything!")).toBeInTheDocument();
+
+    const image = getByAltText("Ticking clock shaped like a pear.");
+    expect(image).toBeInTheDocument();
+    expect(image.src).toContain("/pear-clock.gif");
+
+    const input = getByRole("textbox");
+    expect(input).toBeInTheDocument();
+    expect(input.placeholder).toBe("Enter room name");
+
+    const button = getByText("GO");
+    expect(button).toBeInTheDocument();
   });
 });
