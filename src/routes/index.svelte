@@ -1,5 +1,5 @@
-<script>
-	let room = '';
+<script lang="ts">
+	let room : string = '';
 	let createRoom;
 </script>
 
