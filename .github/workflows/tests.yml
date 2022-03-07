@@ -16,17 +16,17 @@ on:
 
 jobs:
   frontend-test:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Setup repo
-          uses: actions/checkout@v2
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v2
 
-        - name: Install modules
-          run: yarn install
+      - name: Install modules
+        run: npm install
 
-        - name: Run tests
-          run: yarn jest tests/
+      - name: Run tests
+        run: npm cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json
 
   backend-test:
     runs-on: ubuntu-latest
