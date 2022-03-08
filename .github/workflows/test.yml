@@ -1,58 +1,37 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow will install Deno then run Deno lint and test.
-# For more information see: https://github.com/denoland/setup-deno
-
-name: Tests
-
+name: Test
 on:
   push:
     branches: [development]
   pull_request:
     branches: [development]
-
 jobs:
-  frontend-test:
+  frontend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-
       - name: Install modules
         run: yarn install
-
       - name: Run tests
         run: yarn cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json
-
-  backend-test:
+  backend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-
       - name: Setup Deno
         # uses: denoland/setup-deno@v1
         uses: denoland/setup-deno@004814556e37c54a2f6e31384c9e18e983317366
         with:
           deno-version: v1.x
-
       - name: Verify formatting
         run: deno fmt server/ --check
-
       - name: Run linter
         run: deno lint server/
-
       - name: Run tests
         run: deno test server/ -A --unstable --coverage=.cov_profile
-
       - name: Generate coverage report
         run: deno coverage .cov_profile --lcov --exclude=tests/ > .cov_profile/cov_profile.lcov
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
