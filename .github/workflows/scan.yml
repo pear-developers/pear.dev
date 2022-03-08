@@ -1,4 +1,4 @@
-name: Analyze
+name: Scan
 on:
   push:
     branches: [development]
