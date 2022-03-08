@@ -13,7 +13,7 @@ jobs:
       - name: Install modules
         run: yarn install
       - name: Run tests
-        run: yarn cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json
+        run: yarn cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --coverage --config jest.config.json
   backend:
     runs-on: ubuntu-latest
     steps:
