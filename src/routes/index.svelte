@@ -3,10 +3,6 @@
 	let createRoom;
 </script>
 
-<svelte:head>
-	<title>Pear.dev • Pair programming tool.</title>
-</svelte:head>
-
 <main>
 	<header>
 		<figure>
