@@ -79,8 +79,8 @@
 
 			i {
 				font-size: 30px;
+				color: $black;
 				transition: transform .3s;
-
 			}
 			&:hover i {
 				transform: rotate(30deg);

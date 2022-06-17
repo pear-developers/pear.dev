@@ -2,8 +2,8 @@
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
-	import user from '../../stores/user';
-	import roomName from '../../stores/roomName';
+	import user from '../stores/user';
+	import roomName from '../stores/roomName';
 
 	let participants, ws;
 	let timerStatus = {
