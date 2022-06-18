@@ -15,7 +15,7 @@
 			}}
 		/>
 		<a
-			class="absolute right-2 w-32 p-2 text-center rounded-xl bg-green-400 text-green-600 font-semibold text-2xl cursor-pointer [&[disabled='true']]:cursor-not-allowed"
+			class="absolute right-2 w-32 p-2 text-center rounded-xl bg-green-400 text-green-600 font-semibold text-2xl cursor-pointer"
 			disabled={room == ''}
 			bind:this={createRoom}
 			href="/{room}"
@@ -24,3 +24,9 @@
 		</a>
 	</div>
 </main>
+
+<style>
+	a[disabled="true"] {
+		cursor: not-allowed;
+	}
+</style>
