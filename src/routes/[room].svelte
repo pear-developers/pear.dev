@@ -146,37 +146,18 @@
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <section>
-	<div class="timer">
-		<h2>{formatTime(timerStatus.remaining)}</h2>
+	<div class="flex flex-col justify-center items-center">
+		<h2 class="mb-4 text-gray-800 dark:text-gray-50 text-6xl font-bold">{formatTime(timerStatus.remaining)}</h2>
 		<div class="control-buttons">
-			<button on:click={handleTriggerTimer}>
+			<button
+				on:click={handleTriggerTimer}
+				class="flex justify-center items-center bg-gray-200 dark:bg-gray-700 py-4 px-5 rounded-2xl border border-gray-300 dark:border-gray-600"
+			>
 				{#if timerStatus.state == 'Stopped'}
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
-						><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path
-							d="M361 215C375.3 223.8 384 239.3 384 256C384 272.7 375.3 288.2 361 296.1L73.03 472.1C58.21 482 39.66 482.4 24.52 473.9C9.377 465.4 0 449.4 0 432V80C0 62.64 9.377 46.63 24.52 38.13C39.66 29.64 58.21 29.99 73.03 39.04L361 215z"
-						/></svg
-					>
+					<i class="fa-solid fa-play text-3xl text-gray-800 leading-none dark:text-gray-50" />
 				{:else}
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
-						><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path
-							d="M272 63.1l-32 0c-26.51 0-48 21.49-48 47.1v288c0 26.51 21.49 48 48 48L272 448c26.51 0 48-21.49 48-48v-288C320 85.49 298.5 63.1 272 63.1zM80 63.1l-32 0c-26.51 0-48 21.49-48 48v288C0 426.5 21.49 448 48 448l32 0c26.51 0 48-21.49 48-48v-288C128 85.49 106.5 63.1 80 63.1z"
-						/></svg
-					>
+					<i class="fa-solid fa-pause text-3xl text-gray-800 leading-none dark:text-gray-50" />
 				{/if}
-			</button>
-			<button disabled>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-					><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path
-						d="M480 256c0 123.4-100.5 223.9-223.9 223.9c-48.86 0-95.19-15.58-134.2-44.86c-14.14-10.59-17-30.66-6.391-44.81c10.61-14.09 30.69-16.97 44.8-6.375c27.84 20.91 61 31.94 95.89 31.94C344.3 415.8 416 344.1 416 256s-71.67-159.8-159.8-159.8C205.9 96.22 158.6 120.3 128.6 160H192c17.67 0 32 14.31 32 32S209.7 224 192 224H48c-17.67 0-32-14.31-32-32V48c0-17.69 14.33-32 32-32s32 14.31 32 32v70.23C122.1 64.58 186.1 32.11 256.1 32.11C379.5 32.11 480 132.6 480 256z"
-					/></svg
-				>
-			</button>
-			<button disabled>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
-					><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path
-						d="M287.1 447.1c17.67 0 31.1-14.33 31.1-32V96.03c0-17.67-14.33-32-32-32c-17.67 0-31.1 14.33-31.1 31.1v319.9C255.1 433.6 270.3 447.1 287.1 447.1zM52.51 440.6l192-159.1c7.625-6.436 11.43-15.53 11.43-24.62c0-9.094-3.809-18.18-11.43-24.62l-192-159.1C31.88 54.28 0 68.66 0 96.03v319.9C0 443.3 31.88 457.7 52.51 440.6z"
-					/></svg
-				>
 			</button>
 		</div>
 	</div>
@@ -212,48 +193,6 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
-	}
-
-	.timer h2 {
-		margin-bottom: 1rem;
-
-		font-family: 'Josefin Sans', sans-serif;
-		font-size: 64px;
-		font-weight: 600;
-
-		@apply text-gray-800;
-		@apply dark:text-gray-50;
-	}
-
-	.control-buttons {
-		display: flex;
-		justify-content: center;
-
-		button {
-			display: inline-flex;
-			justify-content: center;
-			align-items: center;
-
-			width: 45px;
-			height: 45px;
-			border: none;
-			border-radius: 5px;
-
-			margin-right: 0.5rem;
-			padding: 0.8rem;
-
-			@apply bg-green-200;
-
-			cursor: pointer;
-
-			svg {
-				@apply fill-green-400;
-			}
-
-			&:disabled {
-				cursor: not-allowed;
-			}
-		}
 	}
 
 	.user-picture-container {
