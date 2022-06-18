@@ -9,26 +9,20 @@ import Index from '../src/routes/index.svelte';
 
 describe('Index', () => {
 	test('shows content when rendered', () => {
-		const { getByText, getByAltText, getByRole } = render(Index);
-
-		expect(getByText('PEAR.DEV')).toBeInTheDocument();
-
-		const image = getByAltText('Ticking clock shaped like a pear.');
-		expect(image).toBeInTheDocument();
-		expect(image).toHaveAttribute('src', '/pear-clock.gif');
+		const { getByText, getByRole } = render(Index);
 
 		const input = getByRole('textbox');
 		expect(input).toBeInTheDocument();
-		expect(input).toHaveAttribute('placeholder', 'mob name');
+		expect(input).toHaveAttribute('placeholder', 'Enter room name');
 
-		const button = getByText('CREATE');
+		const button = getByText('Create');
 		expect(button).toBeInTheDocument();
 	});
 
 	test('sets button link to room name', async () => {
 		const { getByText, getByRole } = render(Index);
 		const input = getByRole('textbox');
-		const button = getByText('CREATE');
+		const button = getByText('Create');
 
 		await fireEvent.input(input, { target: { value: 'test-room-name' } });
 
@@ -39,7 +33,7 @@ describe('Index', () => {
 	test('clicks on button when input change', async () => {
 		const { getByText, getByRole } = render(Index);
 		const input = getByRole('textbox');
-		const button = getByText('CREATE');
+		const button = getByText('Create');
 
 		const onClick = jest.fn();
 		button.addEventListener('click', onClick);
@@ -51,7 +45,7 @@ describe('Index', () => {
 
 	test('disables button if no room name', () => {
 		const { getByText } = render(Index);
-		const button = getByText('CREATE');
+		const button = getByText('Create');
 
 		expect(button).toHaveAttribute('disabled', 'true');
 	});
