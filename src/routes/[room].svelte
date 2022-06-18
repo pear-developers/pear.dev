@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
-	import { fly } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 	import user from '../stores/user';
 	import roomName from '../stores/roomName';
 
@@ -145,7 +145,7 @@
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
-<section>
+<section class="w-full flex justify-center">
 	<div class="flex flex-col justify-center items-center">
 		<h2 class="mb-4 text-gray-800 dark:text-gray-50 text-6xl font-bold">{formatTime(timerStatus.remaining)}</h2>
 		<div class="control-buttons">
@@ -163,69 +163,20 @@
 	</div>
 </section>
 
-<div class="content">
-	<div class="participants-container">
-		{#if participants}
-			<ul>
-				{#each Object.entries(participants) as [uuid, participant]}
-					<li
-						class="participant-container"
-						in:fly={{ x: 1000, duration: 500 }}
-						out:fly={{ x: -1000, duration: 500 }}
-					>
-						<div class="user-picture-container">
-							<img class="user-picture" src={participant.picture} alt="Participant profile" />
-						</div>
-						<p class="participant-name">{participant.name}</p>
-					</li>
-				{/each}
-			</ul>
-		{/if}
-	</div>
-</div>
+ <section class="flex justify-center items-center mt-16">
+	{#if participants}
+		{#each Object.entries(participants) as [uuid, participant]}
+			<div
+				class="flex flex-col justify-center items-center m-4"
+				transition:scale="{{duration: 500, start: 0}}"
+			>
+				<img class="w-24 h-24 rounded-2xl mb-2" src={participant.picture} alt="Participant profile" />
+				<p class="text-gray-800 dark:text-gray-50 text-xl font-normal">{participant.name}</p>
+			</div>
+		{/each}
+	{/if}
+ </section>
 
 <audio id="jingle-audio">
 	<source src="/jingle.mp3" type="audio/mpeg" />
 </audio>
-
-<style lang="scss">
-	section {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-	}
-
-	.user-picture-container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.user-picture {
-		width: 32px;
-		height: 32px;
-		border: 2px solid black;
-		border-radius: 50%;
-	}
-
-	.content {
-		font-family: 'Poppins', sans-serif;
-		display: flex;
-		flex-direction: column;
-		padding: 0 4em;
-
-		ul {
-			list-style-type: none;
-		}
-	}
-
-	.participant-container {
-		padding: 0 2em;
-		border: 1px solid black;
-		display: flex;
-	}
-
-	.participant-name {
-		margin-left: 1em;
-	}
-</style>
