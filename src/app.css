@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		height: 100%;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	html,
+	body,
+	#theme-container,
+	#app-content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	body,
+	#theme-container,
+	#app-content {
+		flex-grow: 1;
+	}
+}

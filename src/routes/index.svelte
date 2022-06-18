@@ -1,5 +1,5 @@
 <script lang="ts">
-	let room : string = '';
+	let room: string = '';
 	let createRoom;
 </script>
 
@@ -9,16 +9,19 @@
 			<img src="/pear-clock.gif" alt="Ticking clock shaped like a pear." />
 		</figure>
 		<div>
-			<h1>PEAR.DEV</h1>
+			<h1 class="overflow-hidden m-0 w-auto text-6xl font-semibold text-gray-800 dark:text-gray-50">
+				PEAR.DEV
+			</h1>
 			<div class="input">
 				<input
+					class="p-4 pr-40 rounded-2xl w-full font-medium text-2xl bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-50"
 					type="text"
 					placeholder="mob name"
 					bind:value={room}
 					on:change={() => {
 						createRoom.click();
 					}}
-				/><a disabled={room == ""} bind:this={createRoom} href="/{room}">CREATE</a>
+				/><a disabled={room == ''} bind:this={createRoom} href="/{room}">CREATE</a>
 			</div>
 		</div>
 	</header>
@@ -26,84 +29,42 @@
 
 <style lang="scss">
 	header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 10rem;
-		width: 100vw;
+		@apply flex justify-center items-center mt-40 w-[100vw];
 
 		a {
-			position: absolute;
-			right: 0.5rem;
-			width: 8rem;
-			padding: 0.5rem;
-			text-align: center;
-			border: 1px solid $primary-dark-text;
-			border-radius: 0.7rem;
-
-			background-color: $primary-text;
-			color: $primary-dark-text;
-				
 			font-family: 'Poppins', sans-serif;
-			font-weight: 600;
-			font-size: 24px;
 			text-decoration: none;
-			cursor: pointer;			
 
-			&[disabled="true"] {
-				cursor: not-allowed;
+			@apply absolute right-2 w-32 p-2 text-center rounded-xl bg-green-400 text-green-600 font-semibold text-2xl cursor-pointer;
 
-				&:active {
-					pointer-events: none;
-				}
+			&[disabled='true'] {
+				@apply cursor-not-allowed;
 			}
 		}
 	}
 
 	h1 {
-		overflow: hidden;
-		margin: 0;
-		width: auto;
-
-		color: $dark-text;
-
 		font-family: 'Josefin Sans', sans-serif;
-		font-size: 64px;
-		font-weight: 600;
 	}
 
 	figure {
-		margin-right: 2rem;
+		@apply mr-8;
 	}
 	img {
-		width: 8vw;
+		@apply w-[8vw];
 	}
 	input {
-		padding: 1rem;
-		padding-right: 10rem;
-		border: 1px solid $border-light;
-		border-radius: 1rem;
-		width: 100%;
-
-		background-color: #f5f5f5;
-
 		font-family: 'Poppins', sans-serif;
-		font-weight: 500;
-		font-size: 24px;
 
 		&:focus {
-			outline: none;
+			@apply outline-none;
 		}
 		&::placeholder {
-			color: $placeholder-text;
+			@apply text-gray-400;
 		}
 	}
 
 	.input {
-		display: flex;
-		align-items: center;
-		position: relative;
-		margin-top: 10px;
-		width: 23rem;
+		@apply flex items-center relative mt-2 w-96;
 	}
 </style>

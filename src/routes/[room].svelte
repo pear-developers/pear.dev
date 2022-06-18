@@ -221,7 +221,8 @@
 		font-size: 64px;
 		font-weight: 600;
 
-		color: $dark-text;
+		@apply text-gray-800;
+		@apply dark:text-gray-50;
 	}
 
 	.control-buttons {
@@ -241,12 +242,12 @@
 			margin-right: 0.5rem;
 			padding: 0.8rem;
 
-			background-color: $primary-background;
+			@apply bg-green-200;
 
 			cursor: pointer;
 
 			svg {
-				fill: $primary-text;
+				@apply fill-green-400;
 			}
 
 			&:disabled {
