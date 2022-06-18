@@ -1,6 +1,6 @@
 <script>
 	import { theme } from '../stores/theme';
-	import Topbar from '$lib/Topbar.svelte';
+	import Header from '$lib/Header.svelte';
 	import Sidebar from '$lib/Sidebar.svelte';
 	import '../app.css';
 </script>
@@ -11,7 +11,7 @@
 
 <div id="theme-container" class={$theme}>
 	<div id="app-content" class="bg-gray-100 dark:bg-gray-800">
-		<Topbar />
+		<Header />
 		<Sidebar />
 
 		<slot />
