@@ -1,6 +1,12 @@
 <script lang="ts">
 	let room: string = '';
 	let createRoom;
+
+	function handleKeyup(event) {
+		if (event.key === 'Enter') {
+			createRoom.click();
+		}
+	}
 </script>
 
 <main class="flex flex-col items-center mt-28">
@@ -10,9 +16,7 @@
 			type="text"
 			placeholder="Enter room name"
 			bind:value={room}
-			on:change={() => {
-				createRoom.click();
-			}}
+			on:keyup={handleKeyup}
 		/>
 		<a
 			class="absolute right-2 w-32 p-2 text-center rounded-xl bg-green-400 text-green-600 font-semibold text-2xl cursor-pointer"
