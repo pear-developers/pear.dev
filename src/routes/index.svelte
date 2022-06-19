@@ -26,7 +26,7 @@
 </main>
 
 <style>
-	a[disabled="true"] {
+	a[disabled='true'] {
 		cursor: not-allowed;
 	}
 </style>
