@@ -3,6 +3,7 @@ import { Participant } from "../src/participant.ts";
 import { Room } from "../src/room.ts";
 import { TimerState } from "../src/timer.ts";
 import { InMemoryWebSocketClient } from "./utils/InMemoryWebSocketClient.ts";
+import { Role } from "../src/participant.ts";
 
 const WithouthInitialMessage = (sent: string[]): string[] => {
   return sent.filter((m) => !m.includes("RoomConnection"));
@@ -10,19 +11,19 @@ const WithouthInitialMessage = (sent: string[]): string[] => {
 
 Deno.test("Room: AddParticipant should send room data", () => {
   const ws = new InMemoryWebSocketClient();
-  const creator = new Participant("uuid", "name", "picture", ws);
+  const creator = new Participant("uuid", "name", "picture", Role.Driver, ws);
   const _ = new Room("url", creator);
 
   assertEquals(Object.keys(ws.sent).length, 1);
   assertEquals(
     ws.sent[0],
-    '{"message_type":"RoomConnection","content":{"url":"url","participants":{"uuid":{"uuid":"uuid","name":"name","picture":"picture"}},"timer":{"remaining":5999,"state":"Stopped","lastStartTime":-1,"duration":5999}}}',
+    '{"message_type":"RoomConnection","content":{"url":"url","participants":{"uuid":{"uuid":"uuid","name":"name","picture":"picture","role":"driver"}},"timer":{"remaining":5999,"state":"Stopped","lastStartTime":-1,"duration":5999}}}',
   );
 });
 
 Deno.test("Room: AddParticipant should not add if in list and not broadcast message", () => {
   const ws = new InMemoryWebSocketClient();
-  const creator = new Participant("uuid", "name", "picture", ws);
+  const creator = new Participant("uuid", "name", "picture", Role.Driver, ws);
   const room = new Room("url", creator);
   room.addParticipant(creator);
 
@@ -34,11 +35,12 @@ Deno.test("Room: AddParticipant should not add if in list and not broadcast mess
 Deno.test("Room: AddParticipant should add if not in list and broadcast update", () => {
   const creatorWs = new InMemoryWebSocketClient();
   const newWs = new InMemoryWebSocketClient();
-  const creator = new Participant("uuid", "name", "picture", creatorWs);
+  const creator = new Participant("uuid", "name", "picture", Role.Driver, creatorWs);
   const newParticipant = new Participant(
     "uuid_new",
     "name_new",
     "picture_new",
+    Role.Navigator,
     newWs,
   );
   const room = new Room("url", creator);
@@ -49,7 +51,7 @@ Deno.test("Room: AddParticipant should add if not in list and broadcast update",
   assertEquals(Object.keys(WithouthInitialMessage(creatorWs.sent)).length, 1);
   assertEquals(
     WithouthInitialMessage(creatorWs.sent)[0],
-    '{"message_type":"ParticipantAdded","content":{"uuid":"uuid_new","name":"name_new","picture":"picture_new"}}',
+    '{"message_type":"ParticipantAdded","content":{"uuid":"uuid_new","name":"name_new","picture":"picture_new","role":"navigator"}}',
   );
   assertEquals(Object.keys(WithouthInitialMessage(newWs.sent)).length, 0);
 });
@@ -59,6 +61,7 @@ Deno.test("Room: RemoveParticipant should remove and return true is empty", () =
     "uuid",
     "name",
     "picture",
+    Role.Driver,
     new InMemoryWebSocketClient(),
   );
   const room = new Room("url", creator);
@@ -74,12 +77,14 @@ Deno.test("Room: RemoveParticipant should remove and broadcast update", () => {
     "uuid",
     "name",
     "picture",
+    Role.Driver,
     new InMemoryWebSocketClient(),
   );
   const newParticipant = new Participant(
     "uuid_new",
     "name_new",
     "picture_new",
+    Role.Navigator,
     ws,
   );
   const room = new Room("url", creator);
@@ -92,24 +97,25 @@ Deno.test("Room: RemoveParticipant should remove and broadcast update", () => {
   assertEquals(Object.keys(WithouthInitialMessage(ws.sent)).length, 1);
   assertEquals(
     WithouthInitialMessage(ws.sent)[0],
-    '{"message_type":"ParticipantRemoved","content":{"uuid":"uuid","name":"name","picture":"picture"}}',
+    '{"message_type":"ParticipantRemoved","content":{"uuid":"uuid","name":"name","picture":"picture","role":"driver"}}',
   );
 });
 
 Deno.test("Room: BindParticipantWS should update participant info and broadcast on message", () => {
   const ws = new InMemoryWebSocketClient();
   const ws2 = new InMemoryWebSocketClient();
-  const room = new Room("url", new Participant("uuid", "name", "picture", ws));
+  const room = new Room("url", new Participant("uuid", "name", "picture", Role.Driver, ws));
   room.participants["uuid2"] = new Participant(
     "uuid_new",
     "name_new",
     "picture_new",
+    Role.Navigator,
     ws2,
   );
   room.bindParticipantWS(ws);
 
   ws.onEvents["message"](
-    '{"message_type":"ParticipantInfoUpdate", "content":{"uuid":"uuid","name":"nameUpdate","picture":"pictureUpdate"}}',
+    '{"message_type":"ParticipantInfoUpdate", "content":{"uuid":"uuid","name":"nameUpdate","picture":"pictureUpdate","role":"navigator"}}',
   );
 
   assertEquals(room.participants["uuid"].name, "nameUpdate");
@@ -121,11 +127,12 @@ Deno.test("Room: BindParticipantWS should update participant info and broadcast 
 Deno.test("Room: BindParticipantWS should start timer and broadcast on message", () => {
   const ws = new InMemoryWebSocketClient();
   const ws2 = new InMemoryWebSocketClient();
-  const room = new Room("url", new Participant("uuid", "name", "picture", ws));
+  const room = new Room("url", new Participant("uuid", "name", "picture", Role.Driver, ws));
   room.participants["uuid2"] = new Participant(
     "uuid_new",
     "name_new",
     "picture_new",
+    Role.Navigator,
     ws2,
   );
   room.bindParticipantWS(ws);
@@ -143,11 +150,12 @@ Deno.test("Room: BindParticipantWS should start timer and broadcast on message",
 Deno.test("Room: BindParticipantWS should stop timer and broadcast on message", () => {
   const ws = new InMemoryWebSocketClient();
   const ws2 = new InMemoryWebSocketClient();
-  const room = new Room("url", new Participant("uuid", "name", "picture", ws));
+  const room = new Room("url", new Participant("uuid", "name", "picture", Role.Driver, ws));
   room.participants["uuid2"] = new Participant(
     "uuid_new",
     "name_new",
     "picture_new",
+    Role.Navigator,
     ws2,
   );
   room.bindParticipantWS(ws);
@@ -163,7 +171,7 @@ Deno.test("Room: BindParticipantWS should stop timer and broadcast on message", 
 
 Deno.test("Room: BindParticipantWS should return on unrecognized message", () => {
   const ws = new InMemoryWebSocketClient();
-  const room = new Room("url", new Participant("uuid", "name", "picture", ws));
+  const room = new Room("url", new Participant("uuid", "name", "picture", Role.Driver, ws));
   room.bindParticipantWS(ws);
 
   ws.onEvents["message"]('{"message_type":"DEFAULT", "content":{}}');

@@ -171,6 +171,11 @@
 				transition:scale="{{duration: 500, start: 0}}"
 			>
 				<img class="w-24 h-24 rounded-2xl mb-2" src={participant.picture} alt="Participant profile" />
+				{#if participant.role !== "passenger"}
+					<span
+						class="bg-gray-300 dark:bg-gray-600 text-xl text-gray-800 dark:text-gray-50 py-[0.15rem] px-2 rounded-full mt-[-1.5rem]"
+					>{participant.role.charAt(0).toUpperCase() + participant.role.slice(1)}</span>
+				{/if}
 				<p class="text-gray-800 dark:text-gray-50 text-xl font-normal">{participant.name}</p>
 			</div>
 		{/each}

@@ -2,7 +2,7 @@ import {
   WebSocketClient,
   WebSocketServer,
 } from "https://deno.land/x/websocket@v0.1.3/mod.ts";
-import { Participant } from "./participant.ts";
+import { Participant, Role } from "./participant.ts";
 import { Room } from "./room.ts";
 
 export class Server {
@@ -25,9 +25,11 @@ export class Server {
     const client_uuid = params.get("client_id");
     const name = params.get("name");
     const picture = params.get("picture");
+    const participantCount = roomUrl in this.rooms ? Object.keys(this.rooms[roomUrl].participants).length : null;
+    const role = participantCount == null ? Role.Driver : participantCount == 1 ? Role.Navigator : Role.Passenger;
 
     if (client_uuid && name && picture) {
-      const participant = new Participant(client_uuid, name, picture, ws);
+      const participant = new Participant(client_uuid, name, picture, role, ws);
 
       if (roomUrl in this.rooms) {
         this.rooms[roomUrl].addParticipant(participant);
