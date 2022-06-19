@@ -9,7 +9,7 @@
 </script>
 
 <header class="p-6 pr-28 flex justify-between items-center">
-	<a 
+	<a
 		href="/"
 		class="p-4 cursor-pointer rounded-2xl border border-transparent hover:border-gray-300 hover:bg-gray-200 hover:dark:border-gray-600 hover:dark:bg-gray-700"
 	>

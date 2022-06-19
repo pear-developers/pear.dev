@@ -151,7 +151,9 @@
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <section class="w-full flex justify-center">
 	<div class="flex flex-col justify-center items-center">
-		<h2 class="mb-4 text-gray-800 dark:text-gray-50 text-6xl font-bold">{formatTime(timerStatus.remaining)}</h2>
+		<h2 class="mb-4 text-gray-800 dark:text-gray-50 text-6xl font-bold">
+			{formatTime(timerStatus.remaining)}
+		</h2>
 		<div class="control-buttons">
 			<button
 				on:click={handleTriggerTimer}
@@ -167,18 +169,28 @@
 	</div>
 </section>
 
- <section class="flex justify-center items-center mt-16">
+<section class="flex justify-center items-center mt-16">
 	{#if participants}
 		{#each Object.entries(participants) as [uuid, participant]}
 			<div
 				class="flex flex-col justify-center items-center m-4"
 			>
-				<img class="w-24 h-24 rounded-2xl mb-2" src={participant.picture} alt="Participant profile" />
+				<img
+					class="w-24 h-24 rounded-2xl mb-2"
+					src={participant.picture}
+					alt="Participant profile"
+				/>
+				{#if participant.role !== 'passenger'}
+					<span
+						class="bg-gray-300 dark:bg-gray-600 text-xl text-gray-800 dark:text-gray-50 py-[0.15rem] px-2 rounded-full mt-[-1.5rem]"
+						>{participant.role.charAt(0).toUpperCase() + participant.role.slice(1)}</span
+					>
+				{/if}
 				<p class="text-gray-800 dark:text-gray-50 text-xl font-normal">{participant.name}</p>
 			</div>
 		{/each}
 	{/if}
- </section>
+</section>
 
 <audio id="jingle-audio">
 	<source src="/jingle.mp3" type="audio/mpeg" />
