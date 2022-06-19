@@ -16,7 +16,7 @@
 
 <aside
 	class:show
-	class="fixed overflow-hidden top-0 right-0 m-6 border rounded-2xl border-transparent h-16 w-16 bg-none hover:border-gray-300 hover:bg-gray-200 hover:dark:border-gray-600 hover:dark:bg-gray-700 [&.show]:h-[calc(100%-3rem)] [&.show]:w-96 [&.show]:border [&.show]:border-gray-300 [&.show]:bg-gray-200 [&.show]:dark:border-gray-600 [&.show]:dark:bg-gray-700"
+	class="fixed overflow-hidden top-0 right-0 m-6 border rounded-2xl border-transparent h-16 w-16 bg-none hover:border-gray-300 hover:bg-gray-200 hover:dark:border-gray-600 hover:dark:bg-gray-700 [&.show]:h-[calc(100%-3rem)] [&.show]:w-96 [&.show]:border [&.show]:border-gray-300 [&.show]:bg-gray-200 [&.show]:dark:border-gray-600 [&.show]:dark:bg-gray-700 z-40"
 >
 	<button
 		id="settings-button"
