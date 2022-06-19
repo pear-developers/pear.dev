@@ -1,9 +1,9 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
-	import { scale } from 'svelte/transition';
 	import user from '../stores/user';
 	import roomName from '../stores/roomName';
+	import { onDestroy } from 'svelte';
 
 	let participants, ws;
 	let timerStatus = {
@@ -25,6 +25,10 @@
 			`ws://localhost:5000/${$page.params.room}?client_id=${$user.uuid}
 			&name=${$user.name}&picture=${encodeURIComponent($user.picture)}`
 		);
+
+		onDestroy(() => {
+			ws.close();
+		});
 
 		ws.addEventListener('message', (message) => {
 			let msg = JSON.parse(message.data);
