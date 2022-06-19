@@ -170,7 +170,6 @@
 		{#each Object.entries(participants) as [uuid, participant]}
 			<div
 				class="flex flex-col justify-center items-center m-4"
-				transition:scale={{ duration: 500, start: 0 }}
 			>
 				<img
 					class="w-24 h-24 rounded-2xl mb-2"
