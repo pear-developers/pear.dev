@@ -28,14 +28,14 @@
 	<section>
 		{#if user}
 			<div
-				class="picture-wrapper relative mb-8 box-border border-8 border-gray-200 rounded-full w-40 h-40 cursor-pointer dark:border-gray-700"
+				class="picture-wrapper relative mb-8 box-border border-8 border-gray-200 rounded-2xl w-40 h-40 cursor-pointer dark:border-gray-700"
 				on:click={() => {
 					pictureInput.click();
 				}}
 			>
 				<img class="user-picture clickable" src={$user.picture} alt="User profile" />
 				<div
-					class="edit-icon absolute bottom-0 right-0 flex justify-center items-center box-border border-8 border-gray-200 rounded-full w-14 h-14 bg-green-400 dark:border-gray-700"
+					class="edit-icon absolute bottom-[-0.5rem] right-[-0.5rem] flex justify-center items-center box-border border-8 border-gray-200 rounded-full w-14 h-14 bg-green-400 dark:border-gray-700"
 				>
 					<i class="fa-solid fa-pencil"></i>
 				</div>
