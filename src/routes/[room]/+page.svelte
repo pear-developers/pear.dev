@@ -1,8 +1,8 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/env';
-	import user from '../stores/user';
-	import roomName from '../stores/roomName';
+	import user from '../../stores/user';
+	import roomName from '../../stores/roomName';
 	import { onDestroy } from 'svelte';
 
 	let participants, ws;
