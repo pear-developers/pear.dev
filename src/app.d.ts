@@ -3,17 +3,12 @@
 // See https://kit.svelte.dev/docs#typescript
 // for information about these interfaces
 declare namespace App {
-	import type { Theme } from './stores/theme';
 
-	interface Locals {
-		theme: Theme | null;
-	}
+	interface Locals {}
 
 	interface Platform {}
 
-	interface Session {
-		theme: Theme | null;
-	}
+	interface Session {}
 
 	interface Stuff {}
 }

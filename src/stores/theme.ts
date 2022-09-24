@@ -1,18 +1,12 @@
-import { browser } from '$app/env';
-import { session } from '$app/stores';
-import type { Theme } from '../types';
-import type { Writable } from 'svelte/store';
-import { derived } from 'svelte/store';
+import {writable} from "svelte/store";
+import { browser } from '$app/environment';
 
-export const theme = derived<Writable<App.Session>, Theme>(session, ($session, set) => {
-	if ($session.theme) {
-		set($session.theme);
-	} else if (browser) {
-		set(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-	}
-});
+const getColorScheme = () => {
+    if (browser) {
+        const appearance = localStorage.getItem('appearance')
+        const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        return appearance ? appearance : prefersColorScheme;
+    }
+}
 
-export const setTheme = (theme: Theme) => {
-	session.update(($session) => ({ ...$session, theme }));
-	fetch('/theme', { method: 'PUT', body: theme });
-};
+export const theme = writable(getColorScheme())

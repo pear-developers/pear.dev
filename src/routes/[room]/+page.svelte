@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import user from '../../stores/user';
 	import roomName from '../../stores/roomName';
 	import { onDestroy } from 'svelte';
@@ -122,7 +122,7 @@
 					if (localInterval) clearInterval(localInterval);
 				}
 			}, 200);
-		} else if (currentStatus == 'Running' && newStatus == 'Stopped') {
+		} else if (currentStatus === 'Running' && newStatus == 'Stopped') {
 			if (localInterval) clearInterval(localInterval);
 		}
 	};
@@ -133,7 +133,7 @@
 	};
 
 	const showNotification = () => {
-		if (notficiationEnabled == 'granted') {
+		if (notficiationEnabled === 'granted') {
 			const notification = new Notification("Time's up!", {
 				body: 'Next dev! Click this notification to restart timer',
 				image: '/type-logo.png',
