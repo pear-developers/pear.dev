@@ -6,6 +6,6 @@ node_modules
 .env
 .env.*
 !.env.example
-/.vscode
-/.idea
+.vscode
+.idea
 /.cov_profile

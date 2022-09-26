@@ -3,15 +3,12 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
-		"server": "deno run --allow-net server/index.ts",
 		"build": "vite build",
 		"preview": "vite preview",
-		"lint": "prettier --ignore-path .prettierignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-		"format": "prettier --ignore-path .prettierignore --write --plugin-search-dir=. . && deno fmt server/",
-		"test:back": "deno test server/",
-		"test:back:coverage": "deno test server/ --coverage=.cov_profile && deno coverage .cov_profile --exclude=tests/",
-		"test:front": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json",
-		"test:front:coverage": "jest --coverage tests/",
+		"lint": "prettier --check --plugin-search-dir=.  && eslint .",
+		"format": "prettier --write --plugin-search-dir=. ",
+		"test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest tests --config jest.config.json",
+		"test:coverage": "jest --coverage tests",
 		"test:watch": "npm run test -- --watch"
 	},
 	"devDependencies": {

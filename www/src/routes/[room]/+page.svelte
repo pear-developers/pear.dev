@@ -1,8 +1,8 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
-	import user from '../../stores/user';
-	import roomName from '../../stores/roomName';
+	import user from '../../stores/user.ts';
+	import roomName from '../../stores/roomName.ts';
 	import { onDestroy } from 'svelte';
 
 	let participants, ws;
@@ -191,5 +191,5 @@
 </section>
 
 <audio id="jingle-audio">
-	<source src="/jingle.mp3" type="audio/mpeg" />
+	<source src='/jingle.mp3' type="audio/mpeg" />
 </audio>

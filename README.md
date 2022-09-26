@@ -2,10 +2,11 @@
 
 A mob/pair programming tool.
 
-# Contributing
+## Prerequisites
+* [Deno](https://deno.land) version `>1.25.0`
+* [PNPM](https://pnpm.io) version `>7.0.0`
 
-Firstly, you'll need to have [Deno](https://deno.land/) and [PNPM](https://pnpm.io/) installed.
-
-Then you need to install the front-end packages with `pnpm install`.
-
-Once the packages are installed, you can run the front-end with `pnpm dev`, and the server `pnpm run server`.
+## Development
+View each project's README.md for instructions.
+* [`server/`](/server): deno websocket server.
+* [`www/`](/www): sveltekit app.
