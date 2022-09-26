@@ -1,8 +1,8 @@
 <script>
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
-	import user from '../../stores/user.ts';
-	import roomName from '../../stores/roomName.ts';
+	import { user } from '../../stores/user.ts';
+	import { room } from '../../stores/room.ts';
 	import { onDestroy } from 'svelte';
 
 	let participants, ws;
@@ -34,7 +34,7 @@
 			let msg = JSON.parse(message.data);
 			switch (msg.message_type) {
 				case 'RoomConnection':
-					$roomName = msg.content.url.replace('/', '');
+					$room.name = msg.content.url.replace('/', '');
 					participants = msg.content.participants;
 					handleTimerUpdate(msg.content.timer);
 					break;
@@ -133,7 +133,7 @@
 	};
 
 	const showNotification = () => {
-		if (notficiationEnabled === 'granted') {
+		if (notificationEnabled === 'granted') {
 			const notification = new Notification("Time's up!", {
 				body: 'Next dev! Click this notification to restart timer',
 				image: '/type-logo.png',
@@ -143,7 +143,7 @@
 				handleTriggerTimer();
 				notification.close();
 			});
-			setTimeout(() => notification.close(), 5_000);
+			setTimeout(() => notification.close(), 5000);
 		}
 	};
 </script>
