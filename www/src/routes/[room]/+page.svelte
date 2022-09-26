@@ -14,11 +14,11 @@
 	};
 	let localRemaining = 0;
 	let localInterval = null;
-	let notficiationEnabled = 'default';
+	let notificationEnabled = 'default';
 
 	if (browser) {
 		Notification.requestPermission().then((permission) => {
-			notficiationEnabled = permission;
+			notificationEnabled = permission;
 		});
 
 		ws = new WebSocket(
