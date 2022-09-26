@@ -52,5 +52,6 @@
 			"prettier --write",
 			"eslint"
 		]
-	}
+	},
+	"type": "module"
 }
