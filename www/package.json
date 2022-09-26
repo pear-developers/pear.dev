@@ -44,7 +44,7 @@
 		"vite": "^3.0.4"
 	},
 	"simple-git-hooks": {
-		"prepare-commit-msg": "devmoji -e --lint"
+		"prepare-commit-msg": "npx devmoji -e --lint"
 	},
 	"type": "module"
 }
