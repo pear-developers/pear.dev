@@ -29,6 +29,7 @@
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.1",
 		"jest": "^27.0.0",
+		"lint-staged": "^13.0.3",
 		"postcss": "^8.4.14",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
@@ -44,7 +45,13 @@
 		"vite": "^3.0.4"
 	},
 	"simple-git-hooks": {
-		"prepare-commit-msg": "npx devmoji -e --lint"
+		"prepare-commit-msg": "npx devmoji -e --lint",
+		"pre-commit": "pnpm exec lint-staged"
 	},
-	"type": "module"
+	"lint-staged": {
+		"*": [
+			"prettier --write",
+			"eslint"
+		]
+	}
 }
