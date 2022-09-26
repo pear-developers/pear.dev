@@ -22,7 +22,7 @@
 		});
 
 		ws = new WebSocket(
-			`ws://localhost:5000/${$page.params.room}?client_id=${$user.uuid}
+			`ws://pear-websocket.deno.dev//${$page.params.room}?client_id=${$user.uuid}
 			&name=${$user.name}&picture=${encodeURIComponent($user.picture)}`
 		);
 
