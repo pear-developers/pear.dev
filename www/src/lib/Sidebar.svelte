@@ -1,5 +1,5 @@
 <script>
-	import user from '../stores/user.ts';
+	import { user } from '../stores/user.ts';
 
 	let show = false;
 	let pictureInput;

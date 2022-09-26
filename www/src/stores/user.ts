@@ -23,4 +23,8 @@ function getUser(): User {
 
 export const user = writable<User>(getUser());
 
-user.subscribe((data) => localStorage.setItem('user', JSON.stringify(data)));
+user.subscribe((data) => {
+	if (browser) {
+		localStorage.setItem('user', JSON.stringify(data))
+	}
+});
