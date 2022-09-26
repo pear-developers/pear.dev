@@ -3,10 +3,6 @@
 	"compilerOptions": {
 		"isolatedModules": false
 	},
-	"exclude": [
-      "apps/www/src/**"
-    ],
-	"include": [
-      "apps/www/src/**/*.spec.ts"
-    ]
+	"exclude": ["apps/www/src/**"],
+	"include": ["apps/www/src/**/*.spec.ts"]
 }
