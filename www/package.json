@@ -1,6 +1,5 @@
 {
-	"name": "pear.dev",
-	"version": "0.0.1",
+	"name": "pear.dev-www",
 	"scripts": {
 		"postinstall": "npx simple-git-hooks",
 		"dev": "vite dev",
