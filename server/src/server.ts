@@ -1,7 +1,7 @@
 import {
   WebSocketClient,
   WebSocketServer,
-} from "https://deno.land/x/websocket@v0.1.3/mod.ts";
+} from "websocket";
 import { Participant, Role } from "./participant.ts";
 import { Room } from "./room.ts";
 

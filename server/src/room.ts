@@ -7,7 +7,7 @@ import {
   TimerUpdateType,
   WSMessage,
 } from "./message.ts";
-import { WebSocketClient } from "https://deno.land/x/websocket@v0.1.3/mod.ts";
+import { WebSocketClient } from "websocket";
 import { Timer } from "./timer.ts";
 
 export class Room {
