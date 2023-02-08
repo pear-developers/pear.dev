@@ -7,7 +7,7 @@ import {
   TimerUpdateType,
   WSMessage,
 } from "./message.ts";
-import { WebSocketClient } from "websocket";
+// import { WebSocketClient } from "websocket";
 import { Timer } from "./timer.ts";
 
 export class Room {
@@ -54,8 +54,8 @@ export class Room {
     return Object.keys(this.participants).length === 0;
   }
 
-  bindParticipantWS(ws: WebSocketClient) {
-    ws.on("message", (msg) => {
+  bindParticipantWS(ws) {
+    ws.onmessage = (msg) => {
       const data = JSON.parse(msg);
       switch (data.message_type) {
         case ParticipantUpdateType.ParticipantInfoUpdate:
@@ -83,7 +83,7 @@ export class Room {
         default:
           return;
       }
-    });
+    };
   }
 
   broadcast(message: WSMessage, toSelf: boolean, uuid?: string) {

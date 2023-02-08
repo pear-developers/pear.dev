@@ -22,8 +22,8 @@
 		});
 
 		ws = new WebSocket(
-			`ws://localhost:5000/${$page.params.room}?client_id=${$user.uuid}
-			&name=${$user.name}&picture=${encodeURIComponent($user.picture)}`
+			`ws://localhost:3000/wss/${$page.params.room}?client_id=${$user.uuid}
+			&name=${$user.name}&picture=TOTO`//${encodeURIComponent($user.picture)}`
 		);
 
 		onDestroy(() => {

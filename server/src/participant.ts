@@ -1,4 +1,4 @@
-import { WebSocketClient } from "websocket";
+// import { WebSocketClient } from "websocket";
 
 export enum Role {
   Driver = "driver",
@@ -11,14 +11,14 @@ export class Participant {
   name: string;
   picture: string;
   role: Role;
-  ws: WebSocketClient;
+  ws: any;
 
   constructor(
     uuid: string,
     name: string,
     picture: string,
     role: Role,
-    ws: WebSocketClient,
+    ws: any,
   ) {
     this.uuid = uuid;
     this.name = name;
