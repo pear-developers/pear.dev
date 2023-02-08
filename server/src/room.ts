@@ -1,103 +1,28 @@
-import { Participant } from "./participant.ts";
-import {
-  ParticipantUpdateMessage,
-  ParticipantUpdateType,
-  RoomConnectionMessage,
-  TimerUpdateMessage,
-  TimerUpdateType,
-  WSMessage,
-} from "./message.ts";
-import { Timer } from "./timer.ts";
+import { MessageType } from "./message.ts";
+import { User } from "./user.ts";
 
 export class Room {
-  url: string;
-  participants: { [uuid: string]: Participant } = {};
-  timer: Timer;
+  users: User[] = [];
 
-  constructor(url: string, creator: Participant) {
-    this.url = url;
-    this.timer = new Timer(5_999);
-    this.addParticipant(creator);
+  constructor(user: User) {
+    this.users.push(user);
   }
 
-  addParticipant(participant: Participant) {
-    if (!(participant.uuid in this.participants)) {
-      this.participants[participant.uuid] = participant;
-      participant.ws.send(JSON.stringify(new RoomConnectionMessage(this)));
+  addUser(user: User) {
+    this.users.forEach((u) => this.sendMessage(u.ws, "NewUser", user.toDto()));
 
-      this.broadcast(
-        new ParticipantUpdateMessage(
-          ParticipantUpdateType.ParticipantAdded,
-          participant,
-        ),
-        false,
-        participant.uuid,
-      );
-      this.bindParticipantWS(participant.ws);
-    }
+    this.sendMessage(user.ws, "RoomStatus", {
+      users: this.users.map((u) => u.toDto()),
+    });
+    this.users.push(user);
   }
 
-  removeParticipant(uuid: string): boolean {
-    if (uuid in this.participants) {
-      const participant = this.participants[uuid];
-      delete this.participants[uuid];
-      this.broadcast(
-        new ParticipantUpdateMessage(
-          ParticipantUpdateType.ParticipantRemoved,
-          participant,
-        ),
-        false,
-        uuid,
-      );
-    }
-    return Object.keys(this.participants).length === 0;
+  removeUser(user: User): number {
+    this.users = this.users.filter((u) => u.uuid != user.uuid);
+    return this.users.length;
   }
 
-  bindParticipantWS(ws: WebSocket) {
-    ws.onmessage = (msg) => {
-      const data = JSON.parse(msg);
-      switch (data.message_type) {
-        case ParticipantUpdateType.ParticipantInfoUpdate:
-          this.broadcast(
-            new ParticipantUpdateMessage(
-              ParticipantUpdateType.ParticipantInfoUpdate,
-              data.content,
-            ),
-            true,
-            data.content.uuid,
-          );
-          this.participants[data.content.uuid].updateInfo(
-            data.content.name,
-            data.content.picture,
-          );
-          break;
-        case TimerUpdateType.TimerStart:
-          this.timer.start(parseInt(data.content.timestamp));
-          this.broadcast(new TimerUpdateMessage(this.timer), true);
-          break;
-        case TimerUpdateType.TimerStop:
-          this.timer.stop(parseInt(data.content.timestamp));
-          this.broadcast(new TimerUpdateMessage(this.timer), true);
-          break;
-        default:
-          return;
-      }
-    };
-  }
-
-  broadcast(message: WSMessage, toSelf: boolean, uuid?: string) {
-    for (const key in this.participants) {
-      if (toSelf || (!toSelf && key != uuid)) {
-        this.participants[key].ws.send(JSON.stringify(message));
-      }
-    }
-  }
-
-  toJSON() {
-    return {
-      url: this.url,
-      participants: this.participants,
-      timer: this.timer,
-    };
+  private sendMessage(ws: WebSocket, type: MessageType, data: unknown) {
+    ws.send(JSON.stringify({ type, data }));
   }
 }

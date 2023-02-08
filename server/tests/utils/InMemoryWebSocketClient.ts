@@ -1,90 +1,56 @@
-import {
-  EventEmitter,
-  GenericFunction,
-  WrappedFunction,
-} from "https://deno.land/std@0.92.0/node/events.ts";
-import { WebSocketClient } from "https://deno.land/x/websocket@v0.1.3/mod.ts";
+import { Message, MessageType } from "../../src/message.ts";
 
-export class InMemoryWebSocketClient extends EventEmitter
-  implements WebSocketClient {
-  onEvents: Record<string | symbol, GenericFunction> = {};
-  sent: string[] = [];
+export class InMemoryWebSocketClient implements WebSocket {
+  binaryType: BinaryType = "arraybuffer";
+  bufferedAmount = 0;
+  extensions = "";
+  onclose: (this: WebSocket, ev: CloseEvent) => any = () => {};
+  onerror: (this: WebSocket, ev: Event | ErrorEvent) => any = () => {};
+  onmessage: (this: WebSocket, ev: MessageEvent<any>) => any = () => {};
+  onopen: (this: WebSocket, ev: Event) => any = () => {};
+  protocol = "";
+  readyState = 0;
+  url = "";
 
-  send(message: string | Uint8Array): void {
-    this.sent.push(message.toString());
+  CLOSED = 0;
+  CLOSING = 1;
+  CONNECTING = 2;
+  OPEN = 3;
+
+  sentMessages: Message[] = [];
+
+  close(code?: number | undefined, reason?: string | undefined): void {
+    this.onclose(new CloseEvent(""));
   }
-  ping(_message?: string | Uint8Array): void {
+
+  send(data: string): void {
+    this.sentMessages.push(JSON.parse(data));
+  }
+
+  addEventListener(type: unknown, listener: unknown, options?: unknown): void {
     throw new Error("Method not implemented.");
   }
-  close(_code: number, _reason?: string): Promise<void> {
+
+  removeEventListener(
+    type: unknown,
+    listener: unknown,
+    options?: unknown,
+  ): void {
     throw new Error("Method not implemented.");
   }
-  closeForce(): void {
+
+  dispatchEvent(event: Event): boolean {
     throw new Error("Method not implemented.");
   }
-  isClosed: boolean | undefined;
-  public addListener(
-    _eventName: string | symbol,
-    _listener: GenericFunction | WrappedFunction,
-  ): this {
-    throw new Error("Method not implemented.");
-  }
-  // deno-lint-ignore no-explicit-any
-  public emit(_eventName: string | symbol, ..._args: any[]): boolean {
-    throw new Error("Method not implemented.");
-  }
-  public eventNames(): [string | symbol] {
-    throw new Error("Method not implemented.");
-  }
-  public getMaxListeners(): number {
-    throw new Error("Method not implemented.");
-  }
-  public listenerCount(_eventName: string | symbol): number {
-    throw new Error("Method not implemented.");
-  }
-  public listeners(_eventName: string | symbol): GenericFunction[] {
-    throw new Error("Method not implemented.");
-  }
-  public rawListeners(
-    _eventName: string | symbol,
-  ): (GenericFunction | WrappedFunction)[] {
-    throw new Error("Method not implemented.");
-  }
-  public off(_eventName: string | symbol, _listener: GenericFunction): this {
-    throw new Error("Method not implemented.");
-  }
-  public on(
-    eventName: string | symbol,
-    listener: GenericFunction | WrappedFunction,
-  ): this {
-    this.onEvents[eventName] = listener as GenericFunction;
-    return this;
-  }
-  public once(_eventName: string | symbol, _listener: GenericFunction): this {
-    throw new Error("Method not implemented.");
-  }
-  public prependListener(
-    _eventName: string | symbol,
-    _listener: GenericFunction | WrappedFunction,
-  ): this {
-    throw new Error("Method not implemented.");
-  }
-  public prependOnceListener(
-    _eventName: string | symbol,
-    _listener: GenericFunction,
-  ): this {
-    throw new Error("Method not implemented.");
-  }
-  public removeAllListeners(_eventName?: string | symbol): this {
-    throw new Error("Method not implemented.");
-  }
-  public removeListener(
-    _eventName: string | symbol,
-    _listener: GenericFunction,
-  ): this {
-    throw new Error("Method not implemented.");
-  }
-  public setMaxListeners(_n: number): this {
-    throw new Error("Method not implemented.");
+
+  openAndSendMessage<T>(type: MessageType, data: T) {
+    this.onopen(new Event(""));
+    const msg = new MessageEvent("string", {
+      data: JSON.stringify({
+        data,
+        type,
+      }),
+    });
+    this.onmessage(msg);
   }
 }
