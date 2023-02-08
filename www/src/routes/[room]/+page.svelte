@@ -22,8 +22,10 @@
 		});
 
 		ws = new WebSocket(
-			`ws://localhost:3000/wss/${$page.params.room}?client_id=${$user.uuid}
-			&name=${$user.name}&picture=TOTO`//${encodeURIComponent($user.picture)}`
+			`${import.meta.env.VITE_WS_URL}:${import.meta.env.VITE_WS_PORT}/wss/${
+				$page.params.room
+			}?client_id=${$user.uuid}
+			&name=${$user.name}&picture=TOTO` //${encodeURIComponent($user.picture)}`
 		);
 
 		onDestroy(() => {
@@ -191,5 +193,5 @@
 </section>
 
 <audio id="jingle-audio">
-	<source src='/jingle.mp3' type="audio/mpeg" />
+	<source src="/jingle.mp3" type="audio/mpeg" />
 </audio>

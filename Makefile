@@ -8,7 +8,8 @@ build:
 	@cp server/src/* build/ && mv build/_customServer.ts build/index.ts && rm build/index.js
 
 run:
-	@deno run --allow-env --allow-read --allow-net build/index.ts
+	@PORT=3000 deno run --allow-env --allow-read --allow-net build/index.ts
 
 dev:
+	@cd server/ && deno run --allow-net --allow-env --allow-read --watch=src/ src/_devServer.ts &
 	@cd www/ && yarn && yarn dev
