@@ -1,8 +1,8 @@
 import { handler } from './handler.js';
 import { env } from './env.js';
 import { Application } from './deps.ts';
-import { Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
-import { Server } from '../server/src/server.ts'
+import { Router, WebSocketClient } from 'https://deno.land/x/oak@v11.1.0/mod.ts';
+import { Server } from './server.ts'
 
 const path = env('SOCKET_PATH', false);
 const host = env('HOST', '0.0.0.0');
@@ -16,9 +16,9 @@ const wsServer = new Server();
 
 router.get("/wss/:room", (ctx) => {
 	if (!ctx.isUpgradable) {
-	  ctx.throw(501);
+		ctx.throw(501);
 	}
-	const ws = ctx.upgrade();
+	const ws: WebSocketClient = ctx.upgrade();
 	ws.onopen = () => {
 		console.log("Connected to client");
 		wsServer.onConnection(ws, ctx.request.url.href);

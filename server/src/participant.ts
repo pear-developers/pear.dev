@@ -1,5 +1,3 @@
-// import { WebSocketClient } from "websocket";
-
 export enum Role {
   Driver = "driver",
   Navigator = "navigator",
@@ -11,7 +9,7 @@ export class Participant {
   name: string;
   picture: string;
   role: Role;
-  ws: any;
+  ws: WebSocket;
 
   constructor(
     uuid: string,
