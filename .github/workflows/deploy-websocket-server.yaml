@@ -25,5 +25,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "pear-dev"
-          entrypoint: "./build/index.ts"
+          entrypoint: "./index.ts"
           root: "build"
