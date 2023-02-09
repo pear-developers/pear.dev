@@ -14,7 +14,7 @@ const router = new Router();
 
 const clientManager = new ClientManager();
 
-router.get("/wss/:room", (ctx) => {
+router.get("/wss", (ctx) => {
   if (!ctx.isUpgradable) {
     ctx.throw(501);
   }
