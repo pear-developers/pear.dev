@@ -45,8 +45,7 @@
 	<ol>
 		{#each roomStatus.users as user}
 			<li>
-				<p>NAME: {user.name}</p>
-				<p>UUID: {user.uuid}</p>
+				<p>{user.name}</p>
 				{#if !user.picture}
 					<img
 						alt={`${user.name} profile picture`}
@@ -57,3 +56,27 @@
 		{/each}
 	</ol>
 {/if}
+
+<style lang="sass">
+	h1
+		text-align: center
+
+	ol
+		list-style-type: none
+		display: flex
+		align-items: center
+		justify-content: center
+		gap: 2em
+		li
+			display: flex
+			flex-direction: column
+			align-items: center
+			justify-content: center
+			border: 1px solid white
+			padding: 2em
+			border-radius: 1em
+		img
+			width: 5em
+			aspect-ratio: 1
+			border-radius: 50%
+</style>

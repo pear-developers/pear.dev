@@ -1,4 +1,4 @@
-export type MessageType = "Auth" | "NewUser" | "RoomStatus";
+export type MessageType = "Auth" | "RoomStatus";
 
 export type AuthMessageData = {
   uuid: string;
