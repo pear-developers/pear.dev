@@ -6,15 +6,12 @@ export class Room {
 
   constructor(user: User) {
     this.users.push(user);
+    this.broadcastRoomStatus();
   }
 
   addUser(user: User) {
-    this.users.forEach((u) => this.sendMessage(u.ws, "NewUser", user.toDto()));
-
-    this.sendMessage(user.ws, "RoomStatus", {
-      users: this.users.map((u) => u.toDto()),
-    });
     this.users.push(user);
+    this.broadcastRoomStatus();
   }
 
   removeUser(user: User): number {
@@ -22,7 +19,18 @@ export class Room {
     return this.users.length;
   }
 
-  private sendMessage(ws: WebSocket, type: MessageType, data: unknown) {
-    ws.send(JSON.stringify({ type, data }));
+  toDto() {
+    return {
+      users: this.users.map((u) => u.toDto()),
+    };
+  }
+
+  private broadcastRoomStatus() {
+    this.users.forEach((user) => {
+      user.ws.send(JSON.stringify({
+        type: "RoomStatus",
+        data: this.toDto(),
+      }));
+    });
   }
 }

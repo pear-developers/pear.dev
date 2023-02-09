@@ -2,52 +2,48 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { onDestroy } from 'svelte';
+	import { user } from '../../stores/user.store';
 
-	let users = [];
-
-	const uuid = Math.random().toString();
-	const name = Math.random().toString();
+	let roomStatus: RoomStatus;
 	let ws: WebSocket;
 	if (browser) {
 		ws = new WebSocket(`${import.meta.env.VITE_WS_URL}:${import.meta.env.VITE_WS_PORT}/wss`);
+
 		ws.onopen = () => {
 			ws.send(
 				JSON.stringify({
 					type: 'Auth',
 					data: {
-						uuid,
+						uuid: $user.uuid,
 						room: $page.params.room,
-						name,
-						picture: null
+						name: $user.name,
+						picture: $user.picture
 					}
 				})
 			);
-			users = [...users, { uuid, name, picture: null }];
+
+			ws.onmessage = (m: MessageEvent<string>) => {
+				const message = JSON.parse(m.data);
+				switch (message.type) {
+					case 'RoomStatus':
+						roomStatus = message.data;
+						break;
+					default:
+						break;
+				}
+			};
 		};
 
-		ws.onmessage = (m: MessageEvent<string>) => {
-			const message = JSON.parse(m.data);
-			switch (message.type) {
-				case 'NewUser':
-					if (message.data.uuid != uuid) users = [...users, message.data];
-					break;
-				case 'RoomStatus':
-					users = [...users, ...message.data.users];
-					break;
-				default:
-					break;
-			}
-		};
+		onDestroy(() => {
+			ws.close();
+		});
 	}
-
-	onDestroy(() => {
-		if (ws) ws.close();
-	});
 </script>
 
-<main>
+<h1>{$page.params.room}</h1>
+{#if roomStatus}
 	<ol>
-		{#each users as user}
+		{#each roomStatus.users as user}
 			<li>
 				<p>NAME: {user.name}</p>
 				<p>UUID: {user.uuid}</p>
@@ -60,27 +56,4 @@
 			</li>
 		{/each}
 	</ol>
-</main>
-
-<style>
-	ol {
-		display: flex;
-		gap: 2em;
-		align-items: center;
-		justify-content: center;
-	}
-
-	ol li {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 1em;
-	}
-
-	ol img {
-		width: 5em;
-		aspect-ratio: 1;
-		border-radius: 50%;
-	}
-</style>
+{/if}
