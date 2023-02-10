@@ -25,9 +25,32 @@ jobs:
       - name: Test Deno Module
         run: deno test --allow-none
 
+  frontend-test:
+    name: Frontend test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: www
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run tests
+        run: yarn test:unit
+
   deploy:
     name: Deploy
-    needs: server-test
+    needs: [server-test, frontend-test]
     runs-on: ubuntu-latest
     permissions:
       id-token: write # Needed for auth with Deno Deploy
