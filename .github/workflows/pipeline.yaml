@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: 
+    needs: server-test
     runs-on: ubuntu-latest
     permissions:
       id-token: write # Needed for auth with Deno Deploy
