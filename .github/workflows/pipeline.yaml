@@ -10,24 +10,17 @@ jobs:
       run:
         working-directory: server
 
-    strategy:
-      matrix:
-        deno-version: [1.3.0]
-
     steps:
       - name: Git Checkout Deno Module
         uses: actions/checkout@v2
 
-      - name: Use Deno Version ${{ matrix.deno-version }}
+      - name: Use Deno Version 1.30.3
         uses: denolib/setup-deno@v2
         with:
-          deno-version: ${{ matrix.deno-version }}
+          deno-version: 1.30.3
 
       - name: Lint Deno Module
         run: deno fmt --check
-
-      - name: Build Deno Module
-        run: deno run
 
       - name: Test Deno Module
         run: deno test --allow-none
