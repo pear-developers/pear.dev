@@ -4,7 +4,7 @@ Deno websocket server.
 
 ## Prerequisites
 
-- [Deno](https://deno.land) version `>1.25.0`
+- [Deno](https://deno.land) version `>1.30.0`
 
 ## Development
 
