@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Git Checkout Deno Module
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: Use Deno Version 1.30.3
-        uses: denolib/setup-deno@v2
+        uses: denolib/setup-deno@main
         with:
           deno-version: 1.30.3
 
@@ -35,10 +35,10 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
 
       - name: Install Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@main
         with:
           node-version: 18
 
