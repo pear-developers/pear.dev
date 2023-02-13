@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { onDestroy } from 'svelte';
-	import { user } from '../../stores/user.store';
+	import { user } from '../../lib/stores/user.store';
 
 	let roomStatus: RoomStatus;
 	let ws: WebSocket;
