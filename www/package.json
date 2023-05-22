@@ -32,6 +32,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-adapter-deno": "^0.9.0"
+		"svelte-adapter-deno": "^0.8.2"
 	}
 }
